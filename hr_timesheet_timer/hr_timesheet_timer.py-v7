@@ -1,0 +1,45 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution, third party addon
+#    Copyright (C) 2004-2015 Vertel AB (<http://vertel.se>).
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+import time
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+from pytz import timezone
+import pytz
+
+from openerp.osv import fields, osv
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.tools.translate import _
+
+import logging
+
+_logger = logging.getLogger(__name__)
+_logger.info("laddas hr_timesheet_timer?")
+
+class hr_timesheet_sheet(osv.osv):
+    _inherit = "hr_timesheet_sheet.sheet"
+    
+    _columns = {
+        'start_time': fields.datetime('Start time'),
+        'stop_time': fields.datetime('Stop time')
+        }
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
