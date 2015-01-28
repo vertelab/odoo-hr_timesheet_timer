@@ -7,11 +7,9 @@
 	    <field name="arch" type="xml">
 		<field name="unit_amount" position="before">
 		    <field name="start_time"/>
-		    <field name="stop_time" on_change="onchange_stop_time(start_time, stop_time)"/>
+		    <field name="stop_time" on_change="onchange_timesheet_timer_stop_time(start_time, stop_time)"/>
 		</field>
 	    </field>
 	</record>
-	
-	
     </data>
 </openerp>

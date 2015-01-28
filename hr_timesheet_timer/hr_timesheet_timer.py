@@ -19,6 +19,7 @@
 #
 ##############################################################################
 
+from datetime import datetime, timedelta
 import itertools
 from lxml import etree
 from openerp import models, fields, api, _
@@ -33,12 +34,16 @@ class account_analytic_line(models.Model):
     
     start_time  = fields.Datetime(string="Start time", default=fields.Datetime.now())
     stop_time   = fields.Datetime(string="Stop time")
+
+class hr_analytic_timesheet(models.Model):
+    _inherit = "hr.analytic.timesheet"
     
     @api.multi
-    def onchange_stop_time(self, starttime, stoptime): #product_id, partner_id, inv_type, fposition_id, account_id):
-        _logger.info('stop_time changed')
-        return {'value': {'unit_amount': 42.0}}
-
+    def onchange_timesheet_timer_stop_time(self, starttime, stoptime):
+        _logger.info('onchange start time |%s|' % starttime)
+        delta = datetime.strptime(stoptime, '%Y-%m-%d %H:%M:%S') - datetime.strptime(starttime, '%Y-%m-%d %H:%M:%S')
+        return {'value': {'unit_amount': delta.seconds / 3600.0}}
+        
     #@api.onchange('stop_time')
     #def on_stop_time_change(self):
     #    _logger.info('stop_time changed')
