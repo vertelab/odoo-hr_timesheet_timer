@@ -7,9 +7,31 @@
 	    <field name="arch" type="xml">
 		<field name="unit_amount" position="before">
 		    <field name="start_time"/>
-		    <field name="stop_time" on_change="onchange_timesheet_timer_stop_time(start_time, stop_time)"/>
+		    <field name="stop_time"/>
 		</field>
 	    </field>
 	</record>
+	<record id="hr_timesheet_line_tree" model="ir.ui.view">
+            <field name="name">hr.analytic.timesheet.tree</field>
+            <field name="model">hr.analytic.timesheet</field>
+            <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="unit_amount" position="before">
+                    <field name="start_time"/>
+                    <field name="stop_time"/>
+                </field>
+            </field>
+        </record>
+	<!--<record id="view_task_form2" model="ir.ui.view">
+            <field name="name">project.task.form</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <field name="hours" position="before">
+                    <field name="start_time"/>
+                    <field name="stop_time"/>
+                </field>
+            </field>
+        </record>-->
     </data>
 </openerp>
