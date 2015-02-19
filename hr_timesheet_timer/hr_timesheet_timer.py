@@ -70,12 +70,21 @@ class project_work_task(models.Model):
     _inherit = "project.task"
     
     @api.one
-    def start_stop_work(self):
+    def start_stop_work(self, context={}, name=''):
         work = self.env['project.task.work'].search([['task_id', '=', self.id], ['hours', '=', 0]])
         if len(work) == 0:
+            #close old active works
+            active_work = self.env['project.task.work'].search([['user_id', '=', self.env.user.id], ['hours', '=', 0]])
+            for w in active_work:
+                try:
+                    w.stop_time = fields.Datetime.now()
+                    w.onchange_timesheet_timer_start_stop_time()
+                    _logger.info("Stopped work on %s for task %s at time %s." % (w.name or '', w.task_id.name, w.stop_time or ''))
+                except:
+                    _logger.info("Error when attempting to stop work on %s for task %s." % (w.name or '', w.task_id.name))
             #create new work
             self.env['project.task.work'].create({
-            'name': 'foobar',
+            'name': name,
             'date': fields.Datetime.now(),
             'start_time': fields.Datetime.now(),
             'task_id': self.id,
@@ -83,12 +92,10 @@ class project_work_task(models.Model):
             'user_id': self.env.user.id,
             'company_id': self.company_id.id,
             })
-        elif len(work) == 1:
-            work.stop_time = fields.Datetime.now()
-            work.onchange_timesheet_timer_start_stop_time()
         else:
-            #error
-            return False
+            for w in work:
+                w.stop_time = fields.Datetime.now()
+                w.onchange_timesheet_timer_start_stop_time()
         return True
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
