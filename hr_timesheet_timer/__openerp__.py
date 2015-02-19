@@ -32,7 +32,7 @@ Adding start and end time to timesheet.
     'author': 'Vertel AB',
     'website': 'http://www.vertel.se',
     'depends': ['hr_timesheet_sheet', 'hr_timesheet', 'project_timesheet'],
-    'data': ['hr_timesheet_sheet_view.xml',
+    'data': ['hr_timesheet_view.xml',
     ],
 
     'installable': True,
