@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+<!-- Template for timereport list -->
+        <template id="project_timereport" name="Project Timereport">
+            &lt;!DOCTYPE html&gt;
+            <html style="height: 100%">
+                <head>
+                    <title>Todo List</title>
+                    
+  
+                </head>
+                <body>
+                <t t-call="website.layout">
+                    <div id="wrap" class="oe_structure oe_empty"> 
+
+                        <section class="mb32 mt16">
+                            <div class="container">
+                                    
+                                    <section class="oe_container oe_dark">
+                                        <div class="oe_row">           
+                                        <div>
+                                            <br></br>
+                                            <h2><strong>Todo List</strong></h2>                                                                            
+                                            <font size="4">  
+                                            <table class="table table-striped">
+                                                <t t-foreach="tasks" t-as="t">                                       
+                                                <tr><td>
+                                                    <a t-att-href="'/treport/%s/%s' %(user.id,t.id)">
+                                                    <t t-raw="t.name"/></a>
+                                                    
+                                                    <td>
+                                                        <form t-att-action="'/treport/%s/%s' %(user.id, t.id)" method="POST">
+                                                        <t t-if="t.check_started_work()">
+                                                        <input name="save" type="submit" class="btn btn-primary btn-xs pull-center mt8 " 
+                                                            value="Start"/>
+                                                        </t>
+                                                        <t t-if="t.check_started_work()==False">
+                                                        <input name="save" type="submit" class="btn btn-success btn-xs pull-center mt8 " 
+                                                            value="Stop"/>
+                                                        </t>
+                                                        </form>
+                                                    </td>
+                                                    </td>
+                                                </tr>
+                                                </t>
+                                            </table>                                          
+                                            </font>    
+                                        </div>
+                                        </div> 
+                                    </section>  
+                            </div>
+                        </section>
+
+                    </div>
+                </t>
+                </body>
+            </html>
+        </template>
+        
+<!-- Template for timereport form -->
+        <template id="project_timereport_form" name="Project Timereport Form">
+            &lt;!DOCTYPE html&gt;
+            <html style="height: 100%">
+                <head>
+                  <title>Task Details</title>  
+                </head>
+                <body>
+                <t t-call="website.layout">
+                    <div id="wrap" class="oe_structure oe_empty"> 
+
+                        <section class="mb32 mt16">
+                            <div class="container">
+                                    <section class="oe_container oe_dark">
+                                        <div class="oe_row">           
+                                        <div align="center">
+                                            <br></br>
+                                            <h2><strong>Details</strong></h2>  
+                                            <br/><br/>                                                    
+                                            <form t-att-action="'/treport/%s/%s' %(user.id, task.id)" method="POST">
+                                                <div class="pull-left form-group">
+                                                    <label class=" control-label"><t t-raw="task.name"/></label>
+                                                </div>
+                                                <br/><br/><br/>
+                                                <div align="left">
+                                                    <label for="NoticeInput">Notice</label>
+                                                    <textarea class="form-control" name="name" rows="5" placeholder="Enter your notice here" >
+                                                        <t t-esc="work.task_id.description"/>
+                                                    </textarea>
+                                                </div>  
+                                                <br/>                                       
+                                                    <input name="save" type="submit" class="btn btn-primary btn-lg pull-center mt8" value="Save" />
+                                                    <br/><br/>
+                                            </form>
+                                        </div>
+                                        </div> 
+                                    </section>  
+                            </div>
+                        </section>
+
+                    </div>
+                </t> 
+                </body>
+            </html>
+        </template>
+    </data>
+</openerp>

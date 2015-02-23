@@ -74,6 +74,14 @@ class project_task(models.Model):
     def _start_stop_button_invisible(self):
         self.ss_button_inv = (self.env.user.id != self.user_id.id)
     
+    @api.multi
+    def check_started_work(self):
+        for task in self:
+            work = self.env['project.task.work'].search([['task_id', '=', task.id], ['hours', '=', 0]])
+            if len(work) == 0:
+                return True
+        return False
+        
     @api.one
     def start_stop_work(self, context={}, name=''):
         if self.env.user.id != self.user_id.id:
