@@ -69,6 +69,14 @@ class project_work(models.Model):
 class project_work_task(models.Model):
     _inherit = "project.task"
     
+    @api.multi
+    def check_started_work(self):
+        for task in self:
+            work = self.env['project.task.work'].search([['task_id', '=', task.id], ['hours', '=', 0]])
+            if len(work) == 0:
+                return True
+        return False
+        
     @api.one
     def start_stop_work(self, context={}, name=''):
         work = self.env['project.task.work'].search([['task_id', '=', self.id], ['hours', '=', 0]])
