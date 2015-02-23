@@ -18,14 +18,14 @@
             <field name="inherit_id" ref="project.view_task_form2"/>
             <field name="arch" type="xml">
                 <field name="progress" widget="progressbar" groups="project.group_time_work_estimation_tasks" position="after">
-                    <button name="start_stop_work" icon="terp-mail-" string="Start/Stop" type="object" class="oe_highlight"/>
+                    <field name="ss_button_inv" invisible="True"/>
+                    <button name="start_stop_work" icon="terp-mail-" string="Start/Stop" type="object" class="oe_highlight" attrs="{'invisible': [('ss_button_inv', '=', True)]}"/>
                 </field>
                 <field name="hours" position="before">
-                    <field name="start_time"/>
+                    <!--<field name="start_time"/>-->
                     <field name="stop_time"/>
                 </field>
             </field>
         </record>
-        
     </data>
 </openerp>

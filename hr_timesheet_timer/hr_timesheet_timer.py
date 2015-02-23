@@ -48,29 +48,41 @@ class hr_analytic_timesheet(models.Model):
 class project_work(models.Model):
     _inherit = "project.task.work"
     
-    start_time  = fields.Datetime(string="Start time", default=fields.Datetime.now)
     stop_time   = fields.Datetime(string="Stop time")
-    
     """
-    Overwrite to add start and stop time to timesheet.sheet
-    def _create_analytic_entries(self, cr, uid, vals, context):
-        
-    def write(self, cr, uid, ids, vals, context=None):
+    @api.one
+    def create(self, vals):
+        result = super(project_work, self).create(vals)
+        self.hr_analytic_timesheet_id.start_time = self.date
+        return result
     """
+    @api.one
+    def write(self, vals):
+        result = super(project_work, self).write(vals)
+        self.hr_analytic_timesheet_id.stop_time = self.stop_time
+        self.hr_analytic_timesheet_id.start_time = self.date
+        return result
 
-
-    @api.onchange('start_time', 'stop_time')
+    @api.onchange('date', 'stop_time')
     def onchange_timesheet_timer_start_stop_time(self):
-        if self.start_time and self.stop_time:
+        if self.date and self.stop_time:
             self.hours = (datetime.strptime(self.stop_time, 
-            '%Y-%m-%d %H:%M:%S') - datetime.strptime(self.start_time, 
+            '%Y-%m-%d %H:%M:%S') - datetime.strptime(self.date, 
             '%Y-%m-%d %H:%M:%S')).seconds / 3600.0
 
-class project_work_task(models.Model):
+class project_task(models.Model):
     _inherit = "project.task"
+    
+    ss_button_inv = fields.Boolean(compute='_start_stop_button_invisible')
+    
+    @api.one
+    def _start_stop_button_invisible(self):
+        self.ss_button_inv = (self.env.user.id != self.user_id.id)
     
     @api.one
     def start_stop_work(self, context={}, name=''):
+        if self.env.user.id != self.user_id.id:
+            return False
         work = self.env['project.task.work'].search([['task_id', '=', self.id], ['hours', '=', 0]])
         if len(work) == 0:
             #close old active works
@@ -86,7 +98,7 @@ class project_work_task(models.Model):
             self.env['project.task.work'].create({
             'name': name,
             'date': fields.Datetime.now(),
-            'start_time': fields.Datetime.now(),
+            #'start_time': fields.Datetime.now(),
             'task_id': self.id,
             'hours': 0,
             'user_id': self.env.user.id,
