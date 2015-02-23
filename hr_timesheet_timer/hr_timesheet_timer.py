@@ -49,20 +49,15 @@ class project_work(models.Model):
     _inherit = "project.task.work"
     
     stop_time   = fields.Datetime(string="Stop time")
-    """
-    @api.one
-    def create(self, vals):
-        result = super(project_work, self).create(vals)
-        self.hr_analytic_timesheet_id.start_time = self.date
-        return result
-    """
-    @api.one
+    
     def write(self, vals):
         result = super(project_work, self).write(vals)
-        self.hr_analytic_timesheet_id.stop_time = self.stop_time
-        self.hr_analytic_timesheet_id.start_time = self.date
+        if self.hr_analytic_timesheet_id:
+            self.hr_analytic_timesheet_id.stop_time = self.stop_time
+            self.hr_analytic_timesheet_id.start_time = self.date
         return result
 
+    @api.one
     @api.onchange('date', 'stop_time')
     def onchange_timesheet_timer_start_stop_time(self):
         if self.date and self.stop_time:
