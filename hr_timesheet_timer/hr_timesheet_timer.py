@@ -79,10 +79,10 @@ class project_work_task(models.Model):
         
     @api.one
     def start_stop_work(self, context={}, name=''):
-        work = self.env['project.task.work'].search([['task_id', '=', self.id], ['hours', '=', 0]])
+        work = self.env['project.task.work'].search(['&',('task_id', '=', self.id), ('hours', '=', 0)])
         if len(work) == 0:
             #close old active works
-            active_work = self.env['project.task.work'].search([['user_id', '=', self.env.user.id], ['hours', '=', 0]])
+            active_work = self.env['project.task.work'].search(['&',('user_id', '=', self.env.user.id), ('hours', '=', 0)])
             for w in active_work:
                 try:
                     w.stop_time = fields.Datetime.now()
@@ -106,4 +106,5 @@ class project_work_task(models.Model):
                 w.onchange_timesheet_timer_start_stop_time()
         return True
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+   
+   # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

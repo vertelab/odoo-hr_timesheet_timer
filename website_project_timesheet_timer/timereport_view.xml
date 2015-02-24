@@ -24,23 +24,37 @@
                                             <br></br>
                                             <h2><strong>Todo List</strong></h2>                                                                            
                                             <font size="4">  
+                                            <!--Table for todo list-->
                                             <table class="table table-striped">
                                                 <t t-foreach="tasks" t-as="t">                                       
                                                 <tr><td>
-                                                    <a t-att-href="'/treport/%s/%s' %(user.id,t.id)">
+                                                    <!--Todo list-->
+                                                    <a t-att-href="'/treport/%s/%s/0' %(user.id,t.id)">
                                                     <t t-raw="t.name"/></a>
                                                     
                                                     <td>
-                                                        <form t-att-action="'/treport/%s/%s' %(user.id, t.id)" method="POST">
+                                                        <!--Notice box on todo list view-->
+<!--
+                                                            <div class="form-group">
+                                                                <textarea type="text" class="form-control" placeholder="notice"><t t-if ="work and work.name" ><t t-esc="work.name"/></t></textarea>
+                                                            </div>
+-->
+
+                                                        <!--Start/Stop buttons-->
+                                                        <form t-att-action="'/treport/%s/%s/1' %(user.id, t.id)" method="POST">
                                                         <t t-if="t.check_started_work()">
-                                                        <input name="save" type="submit" class="btn btn-primary btn-xs pull-center mt8 " 
+                                                        <input name="save" type="submit" class="btn btn-primary btn-xs pull-right mt8 " 
                                                             value="Start"/>
                                                         </t>
                                                         <t t-if="t.check_started_work()==False">
-                                                        <input name="save" type="submit" class="btn btn-success btn-xs pull-center mt8 " 
+                                                        <input name="save" type="submit" class="btn btn-success btn-xs pull-right mt8 " 
                                                             value="Stop"/>
                                                         </t>
                                                         </form>
+<!--
+                                                            <input name="save" type="submit" class="btn btn-warning btn-xs pull-right col-sm-2 mt8" value="Save" />
+-->
+                                                        
                                                     </td>
                                                     </td>
                                                 </tr>
@@ -64,7 +78,7 @@
             &lt;!DOCTYPE html&gt;
             <html style="height: 100%">
                 <head>
-                  <title>Task Details</title>  
+                  <title>Task Details</title> 
                 </head>
                 <body>
                 <t t-call="website.layout">
@@ -78,17 +92,23 @@
                                             <br></br>
                                             <h2><strong>Details</strong></h2>  
                                             <br/><br/>                                                    
-                                            <form t-att-action="'/treport/%s/%s' %(user.id, task.id)" method="POST">
+                                            <form t-att-action="'/treport/%s/%s/0' %(user.id, task.id)" method="POST">
                                                 <div class="pull-left form-group">
                                                     <label class=" control-label"><t t-raw="task.name"/></label>
+                                                    <br/>
+                                                    <label class=" control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
+                                                </div>
+                                                <br/>
+                                                <div class="pull-right form-group">
+                                                    <label class=" control-label" widget="priority">Priority: <t t-raw="task.priority"/></label>
                                                 </div>
                                                 <br/><br/><br/>
+
+
                                                 <div align="left">
                                                     <label for="NoticeInput">Notice</label>
-                                                    <textarea class="form-control" name="name" rows="5" placeholder="Enter your notice here" >
-                                                        <t t-esc="work.task_id.description"/>
-                                                    </textarea>
-                                                </div>  
+                                                    <textarea class="form-control" name="name" rows="5" placeholder="Enter your notice here" ><t t-if ="work and work.name" ><t t-esc="work.name"/></t></textarea>
+                                                </div>
                                                 <br/>                                       
                                                     <input name="save" type="submit" class="btn btn-primary btn-lg pull-center mt8" value="Save" />
                                                     <br/><br/>
