@@ -1,3 +1,24 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+# OpenERP, Open Source Management Solution, third party addon
+# Copyright (C) 2004-2015 Vertel AB (<http://vertel.se>).
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
 from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, Warning, RedirectWarning
 from openerp import http
@@ -32,7 +53,7 @@ class project_timereport(http.Controller):
 
         return request.render('website_project_timesheet_timer.project_timereport', ctx)
         
-    @http.route(['/treport/<model("res.users"):user>/<model("project.task"):task>/<int:start>'], type='http', auth="user", website=True)
+    @http.route(['/treport/<model("res.users"):user>/<model("project.task"):task>/<int:start>', '/<model("project.product"):product>'], type='http', auth="user", website=True)
     def timereport_form(self, user=False, task=False, start=False, **post):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
         if not user:
