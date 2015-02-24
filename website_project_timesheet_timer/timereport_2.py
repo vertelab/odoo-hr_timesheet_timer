@@ -53,7 +53,7 @@ class project_timereport(http.Controller):
 
         return request.render('website_project_timesheet_timer.project_timereport', ctx)
         
-    @http.route(['/treport/<model("res.users"):user>/<model("project.task"):task>/<int:start>'], type='http', auth="user", website=True)
+    @http.route(['/treport/<model("res.users"):user>/<model("project.task"):task>/<int:start>', '/<model("project.product"):product>'], type='http', auth="user", website=True)
     def timereport_form(self, user=False, task=False, start=False, **post):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
         if not user:

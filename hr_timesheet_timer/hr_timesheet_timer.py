@@ -84,10 +84,13 @@ class project_task(models.Model):
         
     @api.one
     def start_stop_work(self, context={}, name=''):
+
         work = self.env['project.task.work'].search(['&',('task_id', '=', self.id), ('hours', '=', 0)])
-        if self.env.user.id != self.user_id.id:
-            return False
-            
+
+        #if self.env.user.id != self.user_id.id:
+            #return False
+        #work = self.env['project.task.work'].search([['task_id', '=', self.id], ['hours', '=', 0]])
+
         if len(work) == 0:
             #close old active works
             active_work = self.env['project.task.work'].search(['&',('user_id', '=', self.env.user.id), ('hours', '=', 0)])

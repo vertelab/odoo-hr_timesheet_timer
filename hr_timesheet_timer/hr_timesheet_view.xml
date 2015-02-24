@@ -7,8 +7,7 @@
             <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
             <field name="arch" type="xml">
                 <field name="unit_amount" position="before">
-                    <field name="start_time"/>
-                    <field name="stop_time"/>
+                    <field name="date"/>
                 </field>
             </field>
         </record>
