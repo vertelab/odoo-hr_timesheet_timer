@@ -93,23 +93,54 @@
                                             <h2><strong>Details</strong></h2>  
                                             <br/><br/>                                                    
                                             <form t-att-action="'/treport/%s/%s/0' %(user.id, task.id)" method="POST">
+                                                
+                                                <!--info labels, task name and task deadline-->
                                                 <div class="pull-left form-group">
                                                     <label class=" control-label"><t t-raw="task.name"/></label>
                                                     <br/>
                                                     <label class=" control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
-                                                </div>
-                                                <br/>
-                                                <div class="pull-right form-group">
-                                                    <label class=" control-label" widget="priority">Priority: <t t-raw="task.priority"/></label>
-                                                </div>
+                                                </div> 
                                                 <br/><br/><br/>
-
-
-                                                <div align="left">
-                                                    <label for="NoticeInput">Notice</label>
-                                                    <textarea class="form-control" name="name" rows="5" placeholder="Enter your notice here" ><t t-if ="work and work.name" ><t t-esc="work.name"/></t></textarea>
+                                                
+                                                <!--Area to see the description of the task-->
+                                                <div class="panel panel-info">
+                                                  <div class="panel-heading"><strong>Description</strong></div>
+                                                  <div class="panel-body">
+                                                    <t t-raw="task.description"/>
+                                                  </div>
                                                 </div>
-                                                <br/>                                       
+                                                <br/><br/>
+                                                
+                                                <!--Text area to write notifications-->
+                                                <div align="left">
+                                                    <label for="NoticeInput">Work Notification</label>
+                                                    <textarea class="form-control" name="name" rows="5" placeholder="Enter your notification here" ><t t-if ="work and work.name" ><t t-esc="work.name"/></t></textarea>
+                                                </div>
+                                                <br/><br/> 
+                                                
+<!--
+                                                <div class="pull-left form-group">
+                                                    <label class=" control-label">Material<br/><t t-raw="product.product_id"/></label>
+                                                </div>      
+-->
+                                                
+                                                <!--Box to give the price of the bought material-->
+                                                <div class="col-lg-6">
+                                                    <label class="pull-left"><strong>Price</strong></label><br/>
+                                                    <div class="pull-left input-group">   
+                                                        <input type="text" class="form-control" aria-label="..."/>
+                                                        <div class="input-group-btn">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Currency <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                            <li><a href="#">$</a></li>
+                                                            <li><a href="#">€</a></li>
+                                                            <li><a href="#">£</a></li>
+                                                            <li><a href="#">sek</a></li>
+                                                        </ul>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                                                                 
                                                     <input name="save" type="submit" class="btn btn-primary btn-lg pull-center mt8" value="Save" />
                                                     <br/><br/>
                                             </form>
