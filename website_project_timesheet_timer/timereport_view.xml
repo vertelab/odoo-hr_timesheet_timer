@@ -118,11 +118,11 @@
                                                 </div>
                                                 <br/><br/> 
                                                 
-<!--
+                                                <!--Displays task material-->
                                                 <div class="pull-left form-group">
                                                     <label class=" control-label">Material<br/><t t-raw="product.product_id"/></label>
                                                 </div>      
--->
+
                                                 
                                                 <!--Box to give the price of the bought material-->
                                                 <div class="col-lg-6">
