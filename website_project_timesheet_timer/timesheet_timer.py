@@ -42,14 +42,15 @@ class project_timereport(http.Controller):
        
         ctx = {
             'user' : user,
-            'tasks': request.registry.get('project.task').browse(cr,uid,request.registry.get('project.task').search(cr,uid,[("user_id","=",user.id)])
-            ,context=context), 
+            'tasks': request.registry.get('project.task').browse(cr,uid,request.registry.get('project.task').search(cr,uid,['&',("user_id","=",user.id),("stage_id.name","!=","Done")], order='priority desc')
+            ,context=context),
             }
     
 
         return request.render('website_project_timesheet_timer.project_timereport', ctx)
         
-    @http.route(['/treport/<model("res.users"):user>/<model("project.task"):task>/<int:start>', '/<model("product.product"):product>'], type='http', auth="user", website=True)
+
+    @http.route(['/treport/<model("res.users"):user>/<model("project.task"):task>/<int:start>', ], type='http', auth="user", website=True)
     def timereport_form(self, user=False, task=False, start=False, **post):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
         if not user:
@@ -64,7 +65,16 @@ class project_timereport(http.Controller):
             
             if len (works)!=0:
                 pool.get('project.task.work').browse(cr,uid,works[0]).name=post.get('name')
+                
+            if start == 2:
+                stage=pool.get('project.task.type').search(cr,uid, ['&',('project_ids','=',task.project_id.id),('name', '=', 'Done')])
+                #if the statement above is correct return the first element in the list stage.
+                if len(stage) > 0:
+                    task.stage_id=stage[0]
             return werkzeug.utils.redirect("/treport/%s" %user.id) 
+            
+            
+                
         
         
 
