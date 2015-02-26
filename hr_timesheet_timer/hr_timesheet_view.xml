@@ -12,6 +12,7 @@
                 </field>
             </field>
         </record>
+        
         <record id="view_task_form2" model="ir.ui.view">
             <field name="name">project.task.form</field>
             <field name="model">project.task</field>
@@ -19,13 +20,38 @@
             <field name="arch" type="xml">
                 <field name="progress" widget="progressbar" groups="project.group_time_work_estimation_tasks" position="after">
                     <field name="ss_button_inv" invisible="True"/>
-                    <button name="start_stop_work" icon="terp-mail-" string="Start/Stop" type="object" class="oe_highlight" attrs="{'invisible': [('ss_button_inv', '=', True)]}"/>
+                    <button name="start_stop_work" icon="gtk-media-play" string="Start/Stop" type="object" class="oe_highlight" attrs="{'invisible': [('ss_button_inv', '=', True)]}"/>
+                </field>
+                <field name="date" position="replace">
                 </field>
                 <field name="hours" position="before">
-                    <!--<field name="start_time"/>-->
+                    <field name="date"/>
                     <field name="stop_time"/>
                 </field>
             </field>
         </record>
+
+        <record id="view_task_work_tree" model="ir.ui.view">
+            <field name="name">project.task.work.tree</field>
+            <field name="model">project.task.work</field>
+            <field name="inherit_id" ref="project.view_task_work_tree"/>
+            <field name="arch" type="xml">
+                <field name="date" position="replace">
+                </field>
+                <field name="hours" position="before">
+                    <field name="date"/>
+                    <field name="stop_time"/>
+                </field>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_list_task_work_lines">
+            <field name="name">Task work lines</field>
+            <field name="res_model">project.task.work</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem id="menu_task_work_lines" parent="project.menu_project_management" name="Task work lines" sequence="50" action="action_list_task_work_lines"/>
+                    
     </data>
 </openerp>

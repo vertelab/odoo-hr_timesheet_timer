@@ -49,6 +49,7 @@ class project_work(models.Model):
     _inherit = "project.task.work"
     
     stop_time   = fields.Datetime(string="Stop time")
+    #start_time  = fields.Datetime(string="Stop time")
     
     def write(self, vals):
         result = super(project_work, self).write(vals)
