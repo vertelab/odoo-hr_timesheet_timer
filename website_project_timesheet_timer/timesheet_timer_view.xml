@@ -30,15 +30,16 @@
                                                 <tr><td>
                                                     <!--Todo list-->
                                                     <a t-att-href="'/treport/%s/%s/0' %(user.id,t.id)">
-                                                    <t t-raw="t.name"/></a>
-                                                    
+                                                    <t t-raw="t.name"/></a> 
                                                     <td>
-                                                        <!--Notice box on todo list view-->
-<!--
-                                                            <div class="form-group">
-                                                                <textarea type="text" class="form-control" placeholder="notice"><t t-if ="work and work.name" ><t t-esc="work.name"/></t></textarea>
-                                                            </div>
--->
+                                                        
+                                                        <!--Done button-->
+                                                        <form t-att-action="'/treport/%s/%s/2' %(user.id, t.id)" method="POST">
+                                                        <t t-if="t.check_started_work()">
+                                                        <input name="done" type="submit" class="btn btn-default btn-xs pull-left mt8 " 
+                                                            value="Done"/>
+                                                        </t>
+                                                        </form>
 
                                                         <!--Start/Stop buttons-->
                                                         <form t-att-action="'/treport/%s/%s/1' %(user.id, t.id)" method="POST">
@@ -92,7 +93,7 @@
                                             <br></br>
                                             <h2><strong>Details</strong></h2>  
                                             <br/><br/>                                                    
-                                            <form t-att-action="'/treport/%s/%s/0' %(user.id, task.id)" method="POST">
+                                            <form method="POST">
                                                 
                                                 <!--info labels, task name and task deadline-->
                                                 <div class="pull-left form-group">
@@ -101,7 +102,9 @@
                                                     <label class=" control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
                                                 </div> 
                                                 <br/><br/><br/>
-                                                
+                                                <div>
+                                                <label class=" control-label" >priority: <t t-raw="task.priority"/></label>
+                                                </div>
                                                 <!--Area to see the description of the task-->
                                                 <div class="panel panel-info">
                                                   <div class="panel-heading"><strong>Description</strong></div>
@@ -117,33 +120,29 @@
                                                     <textarea class="form-control" name="name" rows="5" placeholder="Enter your notification here" ><t t-if ="work and work.name" ><t t-esc="work.name"/></t></textarea>
                                                 </div>
                                                 <br/><br/> 
-                                                
-<!--
-                                                <div class="pull-left form-group">
-                                                    <label class=" control-label">Material<br/><t t-raw="product.product_id"/></label>
-                                                </div>      
--->
-                                                
-                                                <!--Box to give the price of the bought material-->
-                                                <div class="col-lg-6">
-                                                    <label class="pull-left"><strong>Price</strong></label><br/>
-                                                    <div class="pull-left input-group">   
-                                                        <input type="text" class="form-control" aria-label="..."/>
-                                                        <div class="input-group-btn">
-                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Currency <span class="caret"></span></button>
-                                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                            <li><a href="#">$</a></li>
-                                                            <li><a href="#">€</a></li>
-                                                            <li><a href="#">£</a></li>
-                                                            <li><a href="#">sek</a></li>
-                                                        </ul>
-                                                      </div>
-                                                    </div>
-                                                </div>
-                                                                                 
-                                                    <input name="save" type="submit" class="btn btn-primary btn-lg pull-center mt8" value="Save" />
+                                             
+                                                 <!--Done button-->
+                                                <t t-if="task.check_started_work()">
+                                                <input name="done" type="submit" t-att-formaction="'/treport/%s/%s/2' %(user.id, task.id)" class="btn btn-default btn-lg pull-left mt8 " 
+                                                    value="Done"/>
+                                                </t>
+  
+                                                    <!--Start/Stop buttons-->
+                                                    <t t-if="task.check_started_work()">
+                                                    <input name="start" type="submit" t-att-formaction="'/treport/%s/%s/1' %(user.id, task.id)" class="btn btn-primary btn-lg pull-right mt8" 
+                                                            value="Start"/>
+                                                    </t>
+                                                    
+                                                    <t t-if="task.check_started_work()==False">
+                                                    <input name="stop" type="submit" t-att-formaction="'/treport/%s/%s/1' %(user.id, task.id)" class="btn btn-success btn-lg pull-right mt8" 
+                                                        value="Stop"/>
+                                                    </t>
+                                                    
+                                                    <!--Save button-->
+                                                    <input name="save" t-att-formaction="'/treport/%s/%s/0' %(user.id, task.id)" type="submit" class="btn btn-primary btn-lg pull-center mt8" value="Save" />
                                                     <br/><br/>
                                             </form>
+
                                         </div>
                                         </div> 
                                     </section>  
