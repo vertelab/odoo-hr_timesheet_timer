@@ -22,7 +22,7 @@
 from datetime import datetime, timedelta
 import itertools
 from lxml import etree
-from openerp import models, fields, api, _
+from openerp import models, fields, api, _, tools
 from openerp.exceptions import except_orm, Warning, RedirectWarning
 
 import logging
@@ -42,29 +42,43 @@ class hr_analytic_timesheet(models.Model):
     def onchange_timesheet_timer_start_stop_time(self):
         if self.start_time and self.stop_time:
             self.unit_amount = (datetime.strptime(self.stop_time, 
-            '%Y-%m-%d %H:%M:%S') - datetime.strptime(self.start_time, 
-            '%Y-%m-%d %H:%M:%S')).seconds / 3600.0
-
+            tools.DEFAULT_SERVER_DATETIME_FORMAT) - datetime.strptime(self.start_time, 
+            tools.DEFAULT_SERVER_DATETIME_FORMAT)).seconds / 3600.0
+"""
+class project_work(osv.osv):
+    _inherit = "project.task.work"
+    
+    def write(self, cr, uid, ids, vals, context):
+        result = super(project_work, self).write(cr, uid, ids, vals, context)
+        if self.hr_analytic_timesheet_id:
+            self.hr_analytic_timesheet_id.stop_time = self.stop_time
+            self.hr_analytic_timesheet_id.start_time = self.date
+        return result
+"""
 class project_work(models.Model):
     _inherit = "project.task.work"
     
     stop_time   = fields.Datetime(string="Stop time")
     #start_time  = fields.Datetime(string="Stop time")
     
+    @api.multi
     def write(self, vals):
         result = super(project_work, self).write(vals)
-        if self.hr_analytic_timesheet_id:
-            self.hr_analytic_timesheet_id.stop_time = self.stop_time
-            self.hr_analytic_timesheet_id.start_time = self.date
+        for record in self:
+            if record.hr_analytic_timesheet_id:
+                record.hr_analytic_timesheet_id.stop_time = record.stop_time
+                record.hr_analytic_timesheet_id.start_time = record.date
         return result
 
     @api.one
     @api.onchange('date', 'stop_time')
     def onchange_timesheet_timer_start_stop_time(self):
         if self.date and self.stop_time:
-            self.hours = (datetime.strptime(self.stop_time, 
-            '%Y-%m-%d %H:%M:%S') - datetime.strptime(self.date, 
-            '%Y-%m-%d %H:%M:%S')).seconds / 3600.0
+            self.hours = (datetime.strptime(self.stop_time,
+            #'%Y-%m-%d %H:%M:%S') - datetime.strptime(self.date, 
+            #'%Y-%m-%d %H:%M:%S')).seconds / 3600.0
+            tools.DEFAULT_SERVER_DATETIME_FORMAT) - datetime.strptime(self.date, 
+            tools.DEFAULT_SERVER_DATETIME_FORMAT)).seconds / 3600.0
 
 class project_task(models.Model):
     _inherit = "project.task"
@@ -86,7 +100,7 @@ class project_task(models.Model):
     @api.one
     def start_stop_work(self, context={}, name=''):
 
-        work = self.env['project.task.work'].search(['&',('task_id', '=', self.id), ('hours', '=', 0)])
+        work = self.env['project.task.work'].search(['&',('user_id', '=', self.env.user.id), ('task_id', '=', self.id), ('hours', '=', 0)])
 
         #if self.env.user.id != self.user_id.id:
             #return False
