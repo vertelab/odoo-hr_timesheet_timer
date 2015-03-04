@@ -138,28 +138,7 @@
                                                     <textarea class="form-control" name="name" rows="5" placeholder="Enter your notification here" ></textarea>
                                                 </div>
                                                 <br/><br/> 
-                                                
-                                                <!--Box to give the price of the bought material-->
-<!--
-                                                <div class="col-lg-6">
-                                                    <label class="pull-left"><strong>Price</strong></label><br/>
-                                                    <div class="pull-left input-group">   
-                                                        <input type="text" class="form-control" aria-label="..."/>
-                                                        <div class="input-group-btn">
-                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Currency <span class="caret"></span></button>
-                                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                            <li><a href="#">$</a></li>
-                                                            <li><a href="#">€</a></li>
-                                                            <li><a href="#">£</a></li>
-                                                            <li><a href="#">sek</a></li>
-                                                        </ul>
-                                                      </div>
-                                                    </div>
-                                                </div>
-                                                <br/><br/><br/>
-                                                <br/><br/>
--->
-                                                
+
                                                 <!--Done button-->
                                                 <input name="done" type="submit" t-att-formaction="'/timereport/%s/%s/2' %(user.id, task.id)" class="btn btn-default btn-lg pull-left mt8 " 
                                                     value="Done"/>
