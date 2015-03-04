@@ -38,8 +38,6 @@ class project_timereport(http.Controller):
         if not user:
             return werkzeug.utils.redirect("/treport/%s/list" %uid,302)
 
-
-       
         ctx = {
             'user' : user,
             'tasks': request.registry.get('project.task').browse(cr,uid,request.registry.get('project.task').search(cr,uid,['&',("user_id","=",user.id),("stage_id.name","!=","Done")], order='priority desc')
@@ -48,7 +46,7 @@ class project_timereport(http.Controller):
     
 
         return request.render('website_project_timesheet_timer.project_timereport', ctx)
-        
+
 
     @http.route(['/treport/<model("res.users"):user>/<model("project.task"):task>/<int:start>', ], type='http', auth="user", website=True)
     def timereport_form(self, user=False, task=False, start=False, **post):
@@ -72,11 +70,6 @@ class project_timereport(http.Controller):
                 if len(stage) > 0:
                     task.stage_id=stage[0]
             return werkzeug.utils.redirect("/treport/%s" %user.id) 
-            
-            
-                
-        
-        
 
         ctx = {
             'user': user,

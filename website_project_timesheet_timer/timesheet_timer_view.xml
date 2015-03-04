@@ -2,14 +2,19 @@
 <openerp>
     <data>
         
+        <!--Timer option in dropdown menu-->
+        <template id="layout" inherit_id="website_dropdown_menu.layout">
+            <xpath expr='//ul[@id="website-dropdown-menu"]' position="inside" >                 
+                <li><a href="/treport" role="menuitem">Timer</a></li>
+            </xpath>
+        </template>
+               
 <!-- Template for timereport list -->
         <template id="project_timereport" name="Project Timereport">
             &lt;!DOCTYPE html&gt;
             <html style="height: 100%">
                 <head>
                     <title>Todo List</title>
-                    
-  
                 </head>
                 <body>
                 <t t-call="website.layout">
@@ -17,7 +22,6 @@
 
                         <section class="mb32 mt16">
                             <div class="container">
-                                    
                                     <section class="oe_container oe_dark">
                                         <div class="oe_row">           
                                         <div>
@@ -52,9 +56,6 @@
                                                             value="Stop"/>
                                                         </t>
                                                         </form>
-<!--
-                                                            <input name="save" type="submit" class="btn btn-warning btn-xs pull-right col-sm-2 mt8" value="Save" />
--->
                                                         
                                                     </td>
                                                     </td>
@@ -95,16 +96,17 @@
                                             <br/><br/>                                                    
                                             <form method="POST">
                                                 
-                                                <!--info labels, task name and task deadline-->
-                                                <div class="pull-left form-group">
-                                                    <label class=" control-label"><t t-raw="task.name"/></label>
-                                                    <br/>
-                                                    <label class=" control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
-                                                </div> 
-                                                <br/><br/><br/>
-                                                <div>
-                                                <label class=" control-label" >priority: <t t-raw="task.priority"/></label>
+                                                <!--info labels, task name,task priority and task deadline-->
+                                                <div align="left" class="pull-left form-group">
+                                                    <label class="control-label"><t t-raw="task.name"/></label>
+                                                    <br/> 
+                                                    <label class="control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
                                                 </div>
+                                                <div align="right">
+                                                <label class=" control-label" >Priority: <t t-raw="task.priority"/></label>     
+                                                </div>
+                                                <br/><br/><br/>
+   
                                                 <!--Area to see the description of the task-->
                                                 <div class="panel panel-info">
                                                   <div class="panel-heading"><strong>Description</strong></div>
