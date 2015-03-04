@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--Time report option in dropdown menu-->
+        <template id="layout" inherit_id="website_dropdown_menu.layout">
+            <xpath expr='//ul[@id="website-dropdown-menu"]' position="inside" >                 
+                <li><a href="/timereport" role="menuitem">Time Report</a></li>
+            </xpath>
+        </template>
+
+<!-- Template for timereport list -->
+        <template id="project_timereport" name="Project Timereport">
+            &lt;!DOCTYPE html&gt;
+             <html style="height: 100%">
+                <head>
+                    <!--FOR APPLE-->
+                    <meta name="apple-mobile-web-app-capable" content="yes"/>
+                    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+                    <link rel="apple-touch-startup-image" href="/project_timereport/static/description/TRW.png"/>
+                    <link rel="apple-touch-icon" href="/project_timereport/static/description/TRW.png"/>
+                    <link rel="apple-touch-icon-precomposed" sizes="128x128" href="/project_timereport/static/description/TRW.png"/>
+
+                    <!-- WEBPAGE ICON -->
+                    <!--from http://www.faviconer.com/icon/index
+                        http://stackoverflow.com/questions/4888377/how-to-add-a-browser-tab-icon-for-a-website
+                    -->
+                    <link rel="shortcut icon" href="/project_timereport/static/description/TRW.png"  type="image/x-icon" /> 
+                    <link rel="icon" href="/project_timereport/static/description/TRW.png" type="image/x-icon"/>
+
+                    <!--FOR ANDROID-->
+                    <meta name="mobile-web-app-capable" content="yes"/>
+                    <link rel="shortcut icon" sizes="196x196" href="/project_timereport/static/description/TRW.png"/>
+                    <link rel="shortcut icon" sizes="128x128" href="/project_timereport/static/description/TRW.png"/>
+
+                    <title>Todo List</title>
+
+                </head>
+                <body>
+                <t t-call="website.layout">
+                    <div id="wrap" class="oe_structure oe_empty"> 
+
+                        <section class="mb32 mt16">
+                            <div class="container">
+                                    
+                                    <section class="oe_container oe_dark">
+                                        <div class="oe_row">           
+                                        <div>
+                                            <br></br>
+                                            <h2><strong>Todo List</strong></h2> <br/>                                                     
+                                            
+                                            <font size="4">  
+                                            <ul>
+                                            <t t-foreach="tasks" t-as="t">                                       
+                                                <li><a t-att-href="'/timereport/%s/%s/0' %(user.id,t.id)">
+                                                   <t t-raw="t.name"/></a>
+                                                </li> 
+                                            </t>
+                                            </ul>
+                                            </font>
+
+                                        </div>
+                                        </div> 
+                                    </section>  
+                            </div>
+                        </section>
+
+                    </div>
+                </t>
+                </body>
+            </html>
+        </template>
+        
+<!-- Template for timereport form -->
+        <template id="project_timereport_form" name="Project Timereport Form">
+            &lt;!DOCTYPE html&gt;
+            <html style="height: 100%">
+                <head>
+                    <!--FOR APPLE-->
+                    <meta name="apple-mobile-web-app-capable" content="yes"/>
+                    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+                    <link rel="apple-touch-startup-image" href="/project_timereport/static/description/TRW.png"/>
+                    <link rel="apple-touch-icon" href="/project_timereport/static/description/TRW.png"/>
+                    <link rel="apple-touch-icon-precomposed" sizes="128x128" href="/project_timereport/static/description/TRW.png"/>
+
+                    <!-- WEBPAGE ICON -->
+                    <link rel="shortcut icon" href="/project_timereport/static/description/TRW.png"  type="image/x-icon" /> 
+                    <link rel="icon" href="/project_timereport/static/description/TRW.png" type="image/x-icon"/>
+
+                    <!--FOR ANDROID-->
+                    <meta name="mobile-web-app-capable" content="yes"/>
+                    <link rel="shortcut icon" sizes="196x196" href="/project_timereport/static/description/TRW.png"/>
+                    <link rel="shortcut icon" sizes="128x128" href="/project_timereport/static/description/TRW.png"/>
+                    
+                    <title>Task Details</title>  
+                </head>
+                <body>
+                <t t-call="website.layout">
+                    <div id="wrap" class="oe_structure oe_empty"> 
+
+                        <section class="mb32 mt16">
+                            <div class="container">
+                                    <section class="oe_container oe_dark">
+                                        <div class="oe_row">           
+                                        <div align="center">
+                                            <br></br>
+                                            <h2><strong>Details</strong></h2>  <br/><br/>                                                      
+                                            <form t-att-action="'/timereport/%s/%s/1' %(user.id, task.id)" method="POST">
+                                                <!--info labels, task name,task priority and task deadline-->
+                                                <div align="left" class="pull-left form-group">
+                                                    <label class="control-label"><t t-raw="task.name"/></label>
+                                                    <br/> 
+                                                    <label class="control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
+                                                </div>
+                                                <div align="right">
+                                                <label class=" control-label" >Priority: <t t-raw="task.priority"/></label>     
+                                                </div>
+                                                <br/><br/><br/>
+                                                                                               
+                                                <!--Area to see the description of the task-->
+                                                <div class="panel panel-info">
+                                                  <div class="panel-heading"><strong>Description</strong></div>
+                                                  <div class="panel-body">
+                                                    <t t-raw="task.description"/>
+                                                  </div>
+                                                </div>
+                                                <br/>
+                                                
+                                                <!--Time input box-->
+                                                <div class="pull-left form-group">
+                                                    <label for="hours">Time Spent</label>
+                                                    <input name="hours" type="hour" id="hours" placeholder="00:00"/> 
+                                                </div>
+                                                <br/><br/><br/>
+                                                
+                                                <!--Text area to write notifications-->
+                                                <div align="left">
+                                                    <label for="NoticeInput">Work Notification</label>
+                                                    <textarea class="form-control" name="name" rows="5" placeholder="Enter your notification here" ></textarea>
+                                                </div>
+                                                <br/><br/> 
+                                                
+                                                <!--Box to give the price of the bought material-->
+<!--
+                                                <div class="col-lg-6">
+                                                    <label class="pull-left"><strong>Price</strong></label><br/>
+                                                    <div class="pull-left input-group">   
+                                                        <input type="text" class="form-control" aria-label="..."/>
+                                                        <div class="input-group-btn">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Currency <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                            <li><a href="#">$</a></li>
+                                                            <li><a href="#">€</a></li>
+                                                            <li><a href="#">£</a></li>
+                                                            <li><a href="#">sek</a></li>
+                                                        </ul>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                                <br/><br/><br/>
+                                                <br/><br/>
+-->
+                                                
+                                                <!--Done button-->
+                                                <input name="done" type="submit" t-att-formaction="'/timereport/%s/%s/2' %(user.id, task.id)" class="btn btn-default btn-lg pull-left mt8 " 
+                                                    value="Done"/>
+                                                                                                  
+                                                <!--Save button-->            
+                                                <input name="save" type="submit" class="btn btn-primary btn-lg pull-right mt8" value="Save"/>
+                                                <br/><br/>
+                                            </form>
+                                        </div>
+                                        </div> 
+                                    </section>  
+                            </div>
+                        </section>
+
+                    </div>
+                </t> 
+                </body>
+            </html>
+        </template>
+    </data>
+</openerp>
