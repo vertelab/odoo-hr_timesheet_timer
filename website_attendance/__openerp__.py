@@ -24,7 +24,7 @@
     'version': '0.1',
     'category': 'Sales',
     'description': """
-Sign in and out through mobile.
+            Using Punch Clock you will be able to sign in and out through your mobile phone. 
 ===================================================
 """,
     'author': 'Vertel AB',

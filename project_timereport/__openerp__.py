@@ -23,7 +23,10 @@
 'version': '0.1',
 'category': 'Project',
 'description': """
-Report working time.
+Time Report will help you to easily see a list of all your tasks through desktop or your mobile phone.
+By choosing a task you will be able to read the description of the task, write work notification and the time spent on the task. 
+Through Time Report you have even the option to set the status of the task to done. 
+
 ===================================================
 """,
 'author': 'Vertel AB',

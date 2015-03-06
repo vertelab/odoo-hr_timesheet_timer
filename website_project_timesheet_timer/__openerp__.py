@@ -19,11 +19,15 @@
 #
 ##############################################################################
 {
-'name': 'Time Report v.2',
+'name': 'Time Report Timer',
 'version': '0.1',
 'category': 'Project',
 'description': """
-Report working time.
+Time Report will help you to easily see a list of all your tasks through desktop or your mobile phone.
+Time Report will allow you to start and stop a task and in this way it will save the time you spent on the task.  
+You have access to description of the task and you can write a work notification just by clicking on a task.
+You can also change the status of the task to done. 
+
 ===================================================
 """,
 'author': 'Vertel AB',
