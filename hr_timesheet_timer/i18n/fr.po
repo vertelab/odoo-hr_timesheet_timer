@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hr_timesheet_timer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0-20150121\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-04 14:41+0000\n"
+"PO-Revision-Date: 2015-03-05 07:15+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: hr_timesheet_timer
+#: model:ir.model,name:hr_timesheet_timer.model_account_analytic_line
+msgid "Analytic Line"
+msgstr "analytique ligne"
+
+#. module: hr_timesheet_timer
+#: model:ir.model,name:hr_timesheet_timer.model_project_task_work
+msgid "Project Task Work"
+msgstr "Projet Groupe de travail"
+
+#. module: hr_timesheet_timer
+#: field:account.analytic.line,start_time:0
+msgid "Start time"
+msgstr "heure de début"
+
+#. module: hr_timesheet_timer
+#: view:project.task:hr_timesheet_timer.view_task_form2
+msgid "Start/Stop"
+msgstr "Start/Stop"
+
+#. module: hr_timesheet_timer
+#: field:account.analytic.line,stop_time:0 field:project.task.work,stop_time:0
+msgid "Stop time"
+msgstr "arrêter le temps"
+
+#. module: hr_timesheet_timer
+#: model:ir.model,name:hr_timesheet_timer.model_project_task
+msgid "Task"
+msgstr "Tâche"
+
+#. module: hr_timesheet_timer
+#: model:ir.model,name:hr_timesheet_timer.model_hr_analytic_timesheet
+msgid "Timesheet Line"
+msgstr "Feuille de temps ligne"

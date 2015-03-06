@@ -1,0 +1,68 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_project_timesheet_timer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0-20150121\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-04 13:59+0000\n"
+"PO-Revision-Date: 2015-03-05 07:19+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: website_project_timesheet_timer
+#: view:website:website_project_timesheet_timer.project_timereport_form
+msgid "Deadline:"
+msgstr "Dernière date:"
+
+#. module: website_project_timesheet_timer
+#: view:website:website_project_timesheet_timer.project_timereport_form
+msgid "Description"
+msgstr "Description"
+
+#. module: website_project_timesheet_timer
+#: view:website:website_project_timesheet_timer.project_timereport_form
+msgid "Details"
+msgstr "Détails"
+
+#. module: website_project_timesheet_timer
+#: view:website:website_project_timesheet_timer.project_timereport_form
+msgid "Enter your notification here"
+msgstr "Entrez votre notification ici"
+
+#. module: website_project_timesheet_timer
+#: view:website:website_project_timesheet_timer.project_timereport_form
+msgid "Priority:"
+msgstr "Priorité:"
+
+#. module: website_project_timesheet_timer
+#: view:website:website_project_timesheet_timer.project_timereport_form
+msgid "Task Details"
+msgstr "Détails de la tâche"
+
+#. module: website_project_timesheet_timer
+#: code:addons/website_project_timesheet_timer/timesheet_timer.py:58
+#, python-format
+msgid "This is timereport post %s "
+msgstr "Ce est le temps rapport post %s "
+
+#. module: website_project_timesheet_timer
+#: view:website:website.layout
+msgid "Timer"
+msgstr "Minuteur"
+
+#. module: website_project_timesheet_timer
+#: view:website:website_project_timesheet_timer.project_timereport
+msgid "Todo List"
+msgstr "Liste de tâches"
+
+#. module: website_project_timesheet_timer
+#: view:website:website_project_timesheet_timer.project_timereport_form
+msgid "Work Notification"
+msgstr "Notification Travail"
