@@ -45,7 +45,7 @@ class project_timereport(http.Controller):
             }
     
 
-        return request.render('website_project_timesheet_timer.project_timereport', ctx)
+        return request.render('mobile_timesheet_timer.project_timereport', ctx)
 
 
     @http.route(['/treport/<model("res.users"):user>/<model("project.task"):task>/<int:start>', ], type='http', auth="user", website=True)
@@ -78,4 +78,4 @@ class project_timereport(http.Controller):
             }
     
 
-        return request.render('website_project_timesheet_timer.project_timereport_form', ctx)
+        return request.render('mobile_timesheet_timer.project_timereport_form', ctx)

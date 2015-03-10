@@ -2,8 +2,8 @@
 <openerp>
     <data>
         <!--Sign in option in dropdown menu-->
-        <template id="menu_layout" inherit_id="website_dropdown_menu.layout">
-            <xpath expr='//ul[@id="website-dropdown-menu"]' position="inside" >                 
+        <template id="menu_layout" inherit_id="mobile_timesheet_menu.layout">
+            <xpath expr='//ul[@id="mobile-timesheet-menu"]' position="inside" >                 
                 <li><a href="/signin" role="menuitem">Sign in</a></li>
             </xpath>
         </template>

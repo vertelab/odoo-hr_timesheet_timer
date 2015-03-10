@@ -45,7 +45,7 @@ class project_timereport(http.Controller):
             }
     
 
-        return request.render('project_timereport.project_timereport', ctx)
+        return request.render('mobile_timesheet_timereport.project_timereport', ctx)
         
     @http.route(['/timereport/<model("res.users"):user>/<model("project.task"):task>/<int:start>'], type='http', auth="user", website=True)
     def timereport_form(self, user=False, task=False, start=False, **post):
@@ -80,7 +80,7 @@ class project_timereport(http.Controller):
             }
     
 
-        return request.render('project_timereport.project_timereport_form', ctx)
+        return request.render('mobile_timesheet_timereport.project_timereport_form', ctx)
 
     def checkTimeString(self,string_time):
         try:
