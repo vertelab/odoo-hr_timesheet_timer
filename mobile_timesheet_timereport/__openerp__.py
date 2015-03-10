@@ -19,21 +19,20 @@
 #
 ##############################################################################
 {
-'name': 'Time Report Timer',
+'name': 'Time Report',
 'version': '0.1',
 'category': 'Project',
 'description': """
 Time Report will help you to easily see a list of all your tasks through desktop or your mobile phone.
-Time Report will allow you to start and stop a task and in this way it will save the time you spent on the task.  
-You have access to description of the task and you can write a work notification just by clicking on a task.
-You can also change the status of the task to done. 
+By choosing a task you will be able to read the description of the task, write work notification and the time spent on the task. 
+Through Time Report you have even the option to set the status of the task to done. 
 
 ===================================================
 """,
 'author': 'Vertel AB',
 'website': 'http://www.vertel.se',
-'depends': ['project','hr_timesheet_timer','product','website_dropdown_menu'],
-'data': ['timesheet_timer_view.xml',
+'depends': ['project','project_timesheet','hr_timesheet','mobile_timesheet_menu'],
+'data': ['mobile_timesheet_timereport_view.xml',
 ],
 'installable': True,
 }

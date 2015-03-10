@@ -2,8 +2,8 @@
 <openerp>
     <data>
         <!--Time report option in dropdown menu-->
-        <template id="layout" inherit_id="website_dropdown_menu.layout">
-            <xpath expr='//ul[@id="website-dropdown-menu"]' position="inside" >                 
+        <template id="layout" inherit_id="mobile_timesheet_menu.layout">
+            <xpath expr='//ul[@id="mobile-timesheet-menu"]' position="inside">                 
                 <li><a href="/timereport" role="menuitem">Time Report</a></li>
             </xpath>
         </template>

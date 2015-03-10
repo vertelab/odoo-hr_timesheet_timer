@@ -32,12 +32,12 @@ _logger = logging.getLogger(__name__)
 
 class project_timereport(http.Controller):
         
-    @http.route(['/treport/<model("res.users"):user>', '/treport/<model("res.users"):user>/list', '/treport'], type='http', auth="user", website=True)
+    @http.route(['/timereport/<model("res.users"):user>', '/timereport/<model("res.users"):user>/list', '/timereport'], type='http', auth="user", website=True)
     def timereport_list(self, user=False, clicked=False, **post):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
         if not user:
-            return werkzeug.utils.redirect("/treport/%s/list" %uid,302)
-
+            return werkzeug.utils.redirect("/timereport/%s/list" %uid,302)
+           
         ctx = {
             'user' : user,
             'tasks': request.registry.get('project.task').browse(cr,uid,request.registry.get('project.task').search(cr,uid,['&',("user_id","=",user.id),("stage_id.name","!=","Done")], order='priority desc')
@@ -45,37 +45,61 @@ class project_timereport(http.Controller):
             }
     
 
-        return request.render('website_project_timesheet_timer.project_timereport', ctx)
-
-
-    @http.route(['/treport/<model("res.users"):user>/<model("project.task"):task>/<int:start>', ], type='http', auth="user", website=True)
+        return request.render('mobile_timesheet_timereport.project_timereport', ctx)
+        
+    @http.route(['/timereport/<model("res.users"):user>/<model("project.task"):task>/<int:start>'], type='http', auth="user", website=True)
     def timereport_form(self, user=False, task=False, start=False, **post):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
         if not user:
-            return werkzeug.utils.redirect("/treport/%s/form" %uid,302)
-        works=pool.get('project.task.work').search(cr,uid,['&',('task_id','=',task.id),('hours', '=', 0)])
+            return werkzeug.utils.redirect("/timereport/%s/form" %uid,302)
+            
         if request.httprequest.method == 'POST':
-            _logger.warning(_("This is timereport post %s ") % (post))
+            _logger.warning("This is timereport post %s " % (post))
             
-            if start == 1:
-                task.start_stop_work(context, post.get('name'))
-                return werkzeug.utils.redirect("/treport/%s" %user.id) 
+            if start==1:
+                work_id = pool.get('project.task.work').create(cr,uid,{
+                    'task_id':task.id, 
+                    'name': post.get('name'),
+                    #'work': post.get('work'),
+                    'hours': self.checkTimeString(post.get('hours')),
+                    #'date': partner.property_account_position and partner.property_account_position.id or False,
+                    'user_id': user.id,
+                    })
             
-            if len (works)!=0:
-                pool.get('project.task.work').browse(cr,uid,works[0]).name=post.get('name')
-                
-            if start == 2:
+            elif start == 2:
                 stage=pool.get('project.task.type').search(cr,uid, ['&',('project_ids','=',task.project_id.id),('name', '=', 'Done')])
                 #if the statement above is correct return the first element in the list stage.
                 if len(stage) > 0:
                     task.stage_id=stage[0]
-            return werkzeug.utils.redirect("/treport/%s" %user.id) 
-
+            
+            return werkzeug.utils.redirect("/timereport/%s" %user.id)
+            
         ctx = {
-            'user': user,
-            'task': task, 
-            'work': False if len (works)==0 else pool.get('project.task.work').browse(cr,uid,works[0]), 
+            'user' : user,
+            'task': task,
             }
     
 
-        return request.render('website_project_timesheet_timer.project_timereport_form', ctx)
+        return request.render('mobile_timesheet_timereport.project_timereport_form', ctx)
+
+    def checkTimeString(self,string_time):
+        try:
+            split_string = string_time.split(":")
+        except:
+            print "Wrong format, must be a string"
+            return False
+            
+            #len(split_string)==2 == hh:mm      split_string[0] = hours      split_string[1] = minutes
+        if len(split_string) ==2 and 0 < len(split_string[0]) < 3 and len(split_string[1]) == 2 :
+                
+            #check 'string' hour
+            if int(split_string[0]) < 0 or int(split_string[0]) > 23:
+                return False
+      
+            #check 'string' minute
+            if int(split_string[1]) < 0 or int(split_string[1]) > 59:
+                return False
+        else: 
+            return False
+            
+        return float(split_string[1])/60+float(split_string[0])

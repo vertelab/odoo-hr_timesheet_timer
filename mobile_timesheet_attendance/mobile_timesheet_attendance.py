@@ -55,7 +55,7 @@ class website_check_in(http.Controller):
             }
     
 
-        return request.render('website_attendance.check_in', ctx)
+        return request.render('mobile_timesheet_attendance.check_in', ctx)
         
 class hr_employee(models.Model):
     _inherit = ['hr.employee']

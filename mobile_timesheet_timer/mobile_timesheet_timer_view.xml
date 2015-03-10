@@ -3,8 +3,8 @@
     <data>
         
         <!--Timer option in dropdown menu-->
-        <template id="layout" inherit_id="website_dropdown_menu.layout">
-            <xpath expr='//ul[@id="website-dropdown-menu"]' position="inside" >                 
+        <template id="layout" inherit_id="mobile_timesheet_menu.layout">
+            <xpath expr='//ul[@id="mobile-timesheet-menu"]' position="inside" >                 
                 <li><a href="/treport" role="menuitem">Timer</a></li>
             </xpath>
         </template>

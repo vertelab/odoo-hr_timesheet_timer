@@ -9,14 +9,7 @@
                         <span>Reports</span>
                         <span class="caret"></span>                                   
                     </a>
-                    <ul class="dropdown-menu js_usermenu" role="menu" id="website-dropdown-menu">
-                        
-<!--
-                        <li><a href="/treport" role="menuitem">Timer</a></li>
-                        <li><a href="/timereport" role="menuitem">Time Report</a></li>
-                        <li><a href="/signin" role="menuitem" >Punch Clock</a></li>
--->
-                    </ul>
+                    <ul class="dropdown-menu js_usermenu" role="menu" id="mobile-timesheet-menu"></ul>
                 </li>
             </xpath>
         </template>
