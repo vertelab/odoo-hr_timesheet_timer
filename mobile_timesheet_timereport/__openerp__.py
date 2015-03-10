@@ -31,8 +31,8 @@ Through Time Report you have even the option to set the status of the task to do
 """,
 'author': 'Vertel AB',
 'website': 'http://www.vertel.se',
-'depends': ['project','project_timesheet','hr_timesheet','website_dropdown_menu'],
-'data': ['project_view.xml',
+'depends': ['project','project_timesheet','hr_timesheet','mobile_timesheet_menu'],
+'data': ['mobile_timesheet_timereport_view.xml',
 ],
 'installable': True,
 }

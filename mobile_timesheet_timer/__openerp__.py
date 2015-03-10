@@ -32,8 +32,8 @@ You can also change the status of the task to done.
 """,
 'author': 'Vertel AB',
 'website': 'http://www.vertel.se',
-'depends': ['project','hr_timesheet_timer','product','website_dropdown_menu'],
-'data': ['timesheet_timer_view.xml',
+'depends': ['project','hr_timesheet_timer','product','mobile_timesheet_menu'],
+'data': ['mobile_timesheet_timer_view.xml',
 ],
 'installable': True,
 }

@@ -3,7 +3,7 @@
     <data>
         <!--Time report option in dropdown menu-->
         <template id="layout" inherit_id="website_dropdown_menu.layout">
-            <xpath expr='//ul[@id="website-dropdown-menu"]' position="inside" >                 
+            <xpath expr='//ul[@id="website-dropdown-menu"]' position="inside">                 
                 <li><a href="/timereport" role="menuitem">Time Report</a></li>
             </xpath>
         </template>

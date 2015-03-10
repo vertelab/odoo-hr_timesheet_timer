@@ -29,8 +29,8 @@
 """,
     'author': 'Vertel AB',
     'website': 'http://www.vertel.se',
-    'depends': ['base','mail', 'website', 'hr_attendance','website_dropdown_menu'],
-    'data': ['website_attendance.xml',
+    'depends': ['base','mail', 'website', 'hr_attendance','mobile_timesheet_menu'],
+    'data': ['mobile_timesheet_attendance_view.xml',
     ],
 
     'installable': True,
