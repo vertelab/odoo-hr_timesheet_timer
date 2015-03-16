@@ -37,11 +37,14 @@ class project_timereport(http.Controller):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
         if not user:
             return werkzeug.utils.redirect("/treport/%s/list" %uid,302)
+            
+        
 
         ctx = {
             'user' : user,
             'tasks': request.registry.get('project.task').browse(cr,uid,request.registry.get('project.task').search(cr,uid,['&',("user_id","=",user.id),("stage_id.name","!=","Done")], order='priority desc')
             ,context=context),
+            
             }
     
 

@@ -14,6 +14,22 @@
             &lt;!DOCTYPE html&gt;
             <html style="height: 100%">
                 <head>
+                    <!--FOR APPLE-->
+                    <meta name="apple-mobile-web-app-capable" content="yes"/>
+                    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+                    <link rel="apple-touch-startup-image" href="/mobile_timesheet_timer/static/description/timeclock1.png"/>
+                    <link rel="apple-touch-icon" href="/mobile_timesheet_timer/static/description/timeclock1.png"/>
+                    <link rel="apple-touch-icon-precomposed" sizes="128x128" href="/mobile_timesheet_timer/static/description/timeclock1.png"/>
+
+                    <!-- WEBPAGE ICON -->
+                    <link rel="shortcut icon" href="/mobile_timesheet_timer/static/description/timeclock1.png"  type="image/x-icon" /> 
+                    <link rel="icon" href="/mobile_timesheet_timer/static/description/timeclock1.png" type="image/x-icon"/>
+
+                    <!--FOR ANDROID-->
+                    <meta name="mobile-web-app-capable" content="yes"/>
+                    <link rel="shortcut icon" sizes="196x196" href="/mobile_timesheet_timer/static/description/timeclock1.png"/>
+                    <link rel="shortcut icon" sizes="128x128" href="/mobile_timesheet_timer/static/description/timeclock1.png"/>
+                    
                     <title>Todo List</title>
                 </head>
                 <body>
@@ -32,15 +48,22 @@
                                             <table class="table table-striped">
                                                 <t t-foreach="tasks" t-as="t">                                       
                                                 <tr><td>
+                                                    
                                                     <!--Todo list-->
                                                     <a t-att-href="'/treport/%s/%s/0' %(user.id,t.id)">
-                                                    <t t-raw="t.name"/></a> 
+                                                    <t t-raw="t.name"/></a>
+                                                    <t t-if="t.project_id and t.project_id.name">
+                                                        <span style="font-size:0.7em"> 
+                                                            (<t t-raw="t.project_id.name[:7]"/>)
+                                                        </span>
+                                                    </t>
+                                                    
                                                     <td>
                                                         
                                                         <!--Done button-->
                                                         <form t-att-action="'/treport/%s/%s/2' %(user.id, t.id)" method="POST">
                                                         <t t-if="t.check_started_work()">
-                                                        <input name="done" type="submit" class="btn btn-default btn-xs pull-left mt8 " 
+                                                        <input name="done" type="submit" class="btn btn-default btn-s pull-left mt8 " 
                                                             value="Done"/>
                                                         </t>
                                                         </form>
@@ -48,11 +71,11 @@
                                                         <!--Start/Stop buttons-->
                                                         <form t-att-action="'/treport/%s/%s/1' %(user.id, t.id)" method="POST">
                                                         <t t-if="t.check_started_work()">
-                                                        <input name="save" type="submit" class="btn btn-primary btn-xs pull-right mt8 " 
+                                                        <input name="save" type="submit" class="btn btn-primary btn-s pull-right mt8 " 
                                                             value="Start"/>
                                                         </t>
                                                         <t t-if="t.check_started_work()==False">
-                                                        <input name="save" type="submit" class="btn btn-success btn-xs pull-right mt8 " 
+                                                        <input name="save" type="submit" class="btn btn-success btn-s pull-right mt8 " 
                                                             value="Stop"/>
                                                         </t>
                                                         </form>
@@ -80,6 +103,22 @@
             &lt;!DOCTYPE html&gt;
             <html style="height: 100%">
                 <head>
+                    <!--FOR APPLE-->
+                    <meta name="apple-mobile-web-app-capable" content="yes"/>
+                    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+                    <link rel="apple-touch-startup-image" href="/mobile_timesheet_timer/static/description/timeclock1.png"/>
+                    <link rel="apple-touch-icon" href="/mobile_timesheet_timer/static/description/timeclock1.png"/>
+                    <link rel="apple-touch-icon-precomposed" sizes="128x128" href="/mobile_timesheet_timer/static/description/timeclock1.png"/>
+
+                    <!-- WEBPAGE ICON -->
+                    <link rel="shortcut icon" href="/mobile_timesheet_timer/static/description/timeclock1.png"  type="image/x-icon" /> 
+                    <link rel="icon" href="/mobile_timesheet_timer/static/description/timeclock1.png" type="image/x-icon"/>
+
+                    <!--FOR ANDROID-->
+                    <meta name="mobile-web-app-capable" content="yes"/>
+                    <link rel="shortcut icon" sizes="196x196" href="/mobile_timesheet_timer/static/description/timeclock1.png"/>
+                    <link rel="shortcut icon" sizes="128x128" href="/mobile_timesheet_timer/static/description/timeclock1.png"/>
+                    
                   <title>Task Details</title> 
                 </head>
                 <body>
@@ -98,12 +137,19 @@
                                                 
                                                 <!--info labels, task name,task priority and task deadline-->
                                                 <div align="left" class="pull-left form-group">
-                                                    <label class="control-label"><t t-raw="task.name"/></label>
+                                                    <t t-if="task.project_id and task.project_id.name">
+                                                        <label class="control-label">Project: <t t-raw="task.project_id.name"/></label>
+                                                    </t><br/> 
+                                                    <label class="control-label">Task: <t t-raw="task.name"/></label>
                                                     <br/> 
-                                                    <label class="control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
+                                                    <t t-if="task.date_deadline">
+                                                        <label class="control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
+                                                    </t>
                                                 </div>
                                                 <div align="right">
-                                                <label class=" control-label" >Priority: <t t-raw="task.priority"/></label>     
+                                                <t t-if="task.priority">
+                                                    <label class=" control-label" >Priority: <t t-raw="task.priority"/></label>     
+                                                </t>
                                                 </div>
                                                 <br/><br/><br/>
    
