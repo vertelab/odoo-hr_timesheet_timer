@@ -1,0 +1,67 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_timereport
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0-20150121\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-04 13:38+0000\n"
+"PO-Revision-Date: 2015-03-04 14:58+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: project_timereport
+#: view:website:project_timereport.project_timereport_form
+msgid "Deadline:"
+msgstr "الموعد الأخير:"
+
+#. module: project_timereport
+#: view:website:project_timereport.project_timereport_form
+msgid "Description"
+msgstr "وصف"
+
+#. module: project_timereport
+#: view:website:project_timereport.project_timereport_form
+msgid "Details"
+msgstr "تفاصيل"
+
+#. module: project_timereport
+#: view:website:project_timereport.project_timereport_form
+msgid "Enter your notification here"
+msgstr " أدخل الملاحظة الخاصة بك هنا"
+
+#. module: project_timereport
+#: view:website:project_timereport.project_timereport_form
+msgid "Priority:"
+msgstr "الأولوية:"
+
+#. module: project_timereport
+#: view:website:project_timereport.project_timereport_form
+msgid "Task Details"
+msgstr "تفاصيل المهمة"
+
+#. module: project_timereport
+#: view:website:website.layout
+msgid "Time Report"
+msgstr "تقرير الوقت"
+
+#. module: project_timereport
+#: view:website:project_timereport.project_timereport_form
+msgid "Time Spent"
+msgstr "الوقت المستغرق"
+
+#. module: project_timereport
+#: view:website:project_timereport.project_timereport
+msgid "Todo List"
+msgstr "لائحة المهام "
+
+#. module: project_timereport
+#: view:website:project_timereport.project_timereport_form
+msgid "Work Notification"
+msgstr "ملاحظة العمل"
