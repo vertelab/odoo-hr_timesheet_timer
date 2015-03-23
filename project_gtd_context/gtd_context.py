@@ -67,7 +67,6 @@ class controller(http.Controller):
             'task': task,
             }
     
-
         return request.render('project_gtd_context.gtd_task_form', ctx)
 
 class project_gtd_context(models.Model):
@@ -75,7 +74,7 @@ class project_gtd_context(models.Model):
 
     latitude = fields.Float(string = "Lat")
     longitude = fields.Float(string = "Long")
-    gps_base_base_ids = fields.One2many("gps_base.base", inverse_name="project_gtd_context_id")
+    #~ gps_base_base_ids = fields.One2many("gps_base.base", inverse_name="project_gtd_context_id")
     start_time = fields.Datetime('Start Date', select="1")
     stop_time = fields.Datetime('Stop Date', select="1")
     task_ids = fields.Many2one("project.task", inverse_name="gtd_context_id")
@@ -86,10 +85,10 @@ class project_gtd_context(models.Model):
                 return True
         return False
     
-class gps_base_base(models.Model):
-    _inherit = "gps_base.base"
-    
-    project_gtd_context_id = fields.Many2one("project.gtd.context")
+#~ class gps_base_base(models.Model):
+    #~ _inherit = "gps_base.base"
+    #~ 
+    #~ project_gtd_context_id = fields.Many2one("project.gtd.context")
 
 class project_task(models.Model):
     _inherit= "project.task"

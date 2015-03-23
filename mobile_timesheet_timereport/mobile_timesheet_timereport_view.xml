@@ -51,8 +51,13 @@
                                             <font size="4">  
                                             <ul>
                                             <t t-foreach="tasks" t-as="t">                                       
-                                                <li><a t-att-href="'/timereport/%s/%s/0' %(user.id,t.id)">
+                                                <li><a t-att-href="'/timereport/%s' %t.id">
                                                    <t t-raw="t.name"/></a>
+                                                   <t t-if="t.project_id and t.project_id.name">
+                                                        <span style="font-size:0.7em"> 
+                                                            (<t t-raw="t.project_id.name[:7]"/>)
+                                                        </span>
+                                                    </t>
                                                 </li> 
                                             </t>
                                             </ul>
@@ -104,17 +109,24 @@
                                         <div align="center">
                                             <br></br>
                                             <h2><strong>Details</strong></h2>  <br/><br/>                                                      
-                                            <form t-att-action="'/timereport/%s/%s/1' %(user.id, task.id)" method="POST">
+                                            <form t-att-action="'/timereport/%s' % task.id" method="POST">
                                                 <!--info labels, task name,task priority and task deadline-->
                                                 <div align="left" class="pull-left form-group">
-                                                    <label class="control-label"><t t-raw="task.name"/></label>
-                                                    <br/> 
-                                                    <label class="control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
-                                                </div>
-                                                <div align="right">
-                                                <label class=" control-label" >Priority: <t t-raw="task.priority"/></label>     
-                                                </div>
-                                                <br/><br/><br/>
+                                                        <t t-if="task.project_id and task.project_id.name">
+                                                            <label class="control-label">Project: <t t-raw="task.project_id.name"/></label>
+                                                        <br/></t>
+                                                        <label class="control-label">Task: <t t-raw="task.name"/></label>
+                                                        
+                                                        <t t-if="task.date_deadline"><br/> 
+                                                            <label class="control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
+                                                        </t>
+                                                    </div>
+                                                    <div align="right">
+                                                    <t t-if="task.priority">
+                                                        <label class=" control-label" >Priority: <t t-raw="task.priority"/></label>     
+                                                    </t>
+                                                    </div>
+                                                    <br/><br/><br/>
                                                                                                
                                                 <!--Area to see the description of the task-->
                                                 <div class="panel panel-info">
@@ -140,8 +152,7 @@
                                                 <br/><br/> 
 
                                                 <!--Done button-->
-                                                <input name="done" type="submit" t-att-formaction="'/timereport/%s/%s/2' %(user.id, task.id)" class="btn btn-default btn-lg pull-left mt8 " 
-                                                    value="Done"/>
+                                                <input name="done" type="submit" class="btn btn-default btn-lg pull-left mt8 " value="Done"/>
                                                                                                   
                                                 <!--Save button-->            
                                                 <input name="save" type="submit" class="btn btn-primary btn-lg pull-right mt8" value="Save"/>

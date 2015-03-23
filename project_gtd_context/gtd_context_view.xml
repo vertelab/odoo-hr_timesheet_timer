@@ -30,13 +30,32 @@ function showPosition(position) {
 
                         <section class="mb32 mt16">
                             <div class="container">
+                                   
                                     <form method="POST" action="/gtd" name="gpsform">
-                                    <input type="hidden" id="longitude" name="longitude"/>
-                                    <input type="hidden" id="latitude" name="latitude"/>
-                                    <button type="submit">
-                                    Show tasks near me
-                                    </button>
-                                    </form>
+                                    <div class="col-md-6">   
+                                        <input type="hidden" id="longitude" name="longitude"/>
+                                        <input type="hidden" id="latitude" name="latitude"/>
+                                        <button type="submit">
+                                        Show tasks near me
+                                        </button>
+                                    </div> 
+                                    <div class="col-md-6">
+                                        <ul class="dropdown" href="#">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                <span>Context</span>
+                                                <span class="caret"></span>                                   
+                                            </a>
+                                            <ul class="dropdown-menu js_usermenu" role="menu" id="context-menu">
+<!--
+                                                VAD SKA DET STÅ I <a></a>??
+-->
+                                                <a href="#"><ul><t t-esc="project.task.context_id.name"></ul></a> 
+                                            </ul>
+                                        </ul>         
+                                    </div>
+                                    </form> 
+                                    <br/><br/>
+                                                              
                                     <script>
                                     getLocation();
                                     </script>
@@ -138,11 +157,15 @@ function showPosition(position) {
                     <field string="Start time" name="start_time"/>
                     <field string="Stop time" name="stop_time"/>
                      <group>
+<!--
                          <field name="gps_base_base_ids">
                              <field string="Latitude" name="latitude"/>
                              <field string="Longitude" name="longitude"/>
+-->
                       <!--  <widget type="gps_base_gmap_marker" lat="latitude_aux" lng="longitude_aux"/> -->
+<!--
                         </field>
+-->
                      </group>
                 </field>
             </field>

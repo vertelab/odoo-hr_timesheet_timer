@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        
         <!--Timer option in dropdown menu-->
         <template id="layout" inherit_id="mobile_timesheet_menu.layout">
             <xpath expr='//ul[@id="mobile-timesheet-menu"]' position="inside" >                 
@@ -33,67 +32,62 @@
                     <title>Todo List</title>
                 </head>
                 <body>
-                <t t-call="website.layout">
-                    <div id="wrap" class="oe_structure oe_empty"> 
-
-                        <section class="mb32 mt16">
-                            <div class="container">
+                    <t t-call="website.layout">
+                        <div id="wrap" class="oe_structure oe_empty"> 
+                            <section class="mb32 mt16">
+                                <div class="container">
                                     <section class="oe_container oe_dark">
                                         <div class="oe_row">           
-                                        <div>
-                                            <br></br>
-                                            <h2><strong>Todo List</strong></h2>                                                                            
-                                            <font size="4">  
-                                            <!--Table for todo list-->
-                                            <table class="table table-striped">
-                                                <t t-foreach="tasks" t-as="t">                                       
-                                                <tr><td>
-                                                    
-                                                    <!--Todo list-->
-                                                    <a t-att-href="'/treport/%s/%s/0' %(user.id,t.id)">
-                                                    <t t-raw="t.name"/></a>
-                                                    <t t-if="t.project_id and t.project_id.name">
-                                                        <span style="font-size:0.7em"> 
-                                                            (<t t-raw="t.project_id.name[:7]"/>)
-                                                        </span>
-                                                    </t>
-                                                    
-                                                    <td>
-                                                        
-                                                        <!--Done button-->
-                                                        <form t-att-action="'/treport/%s/%s/2' %(user.id, t.id)" method="POST">
-                                                        <t t-if="t.check_started_work()">
-                                                        <input name="done" type="submit" class="btn btn-default btn-s pull-left mt8 " 
-                                                            value="Done"/>
-                                                        </t>
-                                                        </form>
+                                            <div>
+                                                <br></br>
+                                                <h2><strong>Todo List</strong></h2>                                                                            
+                                                <font size="4">  
+                                                    <!--Table for todo list-->
+                                                    <table class="table table-striped">
+                                                        <t t-foreach="tasks" t-as="t">                                       
+                                                            <tr>
+                                                                <td>
+                                                                <!--Todo list-->
+                                                                <a t-att-href="'/treport/%s/%s/0' %(user.id,t.id)">
+                                                                <t t-raw="t.name"/></a>
+                                                                <t t-if="t.project_id and t.project_id.name">
+                                                                    <span style="font-size:0.7em"> 
+                                                                        (<t t-raw="t.project_id.name[:7]"/>)
+                                                                    </span>
+                                                                </t>
+                                                                    <td>
+                                                                        <!--Done button-->
+                                                                        <form t-att-action="'/treport/%s/%s/2' %(user.id, t.id)" method="POST">
+                                                                        <t t-if="t.check_started_work()">
+                                                                        <input name="done" type="submit" class="btn btn-default btn-s pull-left mt8 " 
+                                                                            value="Done"/>
+                                                                        </t>
+                                                                        </form>
 
-                                                        <!--Start/Stop buttons-->
-                                                        <form t-att-action="'/treport/%s/%s/1' %(user.id, t.id)" method="POST">
-                                                        <t t-if="t.check_started_work()">
-                                                        <input name="save" type="submit" class="btn btn-primary btn-s pull-right mt8 " 
-                                                            value="Start"/>
+                                                                        <!--Start/Stop buttons-->
+                                                                        <form t-att-action="'/treport/%s/%s/1' %(user.id, t.id)" method="POST">
+                                                                        <t t-if="t.check_started_work()">
+                                                                        <input name="save" type="submit" class="btn btn-primary btn-s pull-right mt8 " 
+                                                                            value="Start"/>
+                                                                        </t>
+                                                                        <t t-if="t.check_started_work()==False">
+                                                                        <input name="save" type="submit" class="btn btn-success btn-s pull-right mt8 " 
+                                                                            value="Stop"/>
+                                                                        </t>
+                                                                        </form>
+                                                                    </td>
+                                                                </td>
+                                                            </tr>
                                                         </t>
-                                                        <t t-if="t.check_started_work()==False">
-                                                        <input name="save" type="submit" class="btn btn-success btn-s pull-right mt8 " 
-                                                            value="Stop"/>
-                                                        </t>
-                                                        </form>
-                                                        
-                                                    </td>
-                                                    </td>
-                                                </tr>
-                                                </t>
-                                            </table>                                          
-                                            </font>    
-                                        </div>
+                                                    </table>                                          
+                                                </font>    
+                                            </div>
                                         </div> 
                                     </section>  
-                            </div>
-                        </section>
-
-                    </div>
-                </t>
+                                </div>
+                            </section>
+                        </div>
+                    </t>
                 </body>
             </html>
         </template>
@@ -122,59 +116,57 @@
                   <title>Task Details</title> 
                 </head>
                 <body>
-                <t t-call="website.layout">
-                    <div id="wrap" class="oe_structure oe_empty"> 
-
-                        <section class="mb32 mt16">
-                            <div class="container">
+                    <t t-call="website.layout">
+                        <div id="wrap" class="oe_structure oe_empty"> 
+                            <section class="mb32 mt16">
+                                <div class="container">
                                     <section class="oe_container oe_dark">
                                         <div class="oe_row">           
-                                        <div align="center">
-                                            <br></br>
-                                            <h2><strong>Details</strong></h2>  
-                                            <br/><br/>                                                    
-                                            <form method="POST">
-                                                
-                                                <!--info labels, task name,task priority and task deadline-->
-                                                <div align="left" class="pull-left form-group">
-                                                    <t t-if="task.project_id and task.project_id.name">
-                                                        <label class="control-label">Project: <t t-raw="task.project_id.name"/></label>
-                                                    </t><br/> 
-                                                    <label class="control-label">Task: <t t-raw="task.name"/></label>
-                                                    <br/> 
-                                                    <t t-if="task.date_deadline">
-                                                        <label class="control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
+                                            <div align="center">
+                                                <br></br>
+                                                <h2><strong>Details</strong></h2>  
+                                                <br/><br/>                                                    
+                                                <form method="POST">
+                                                    <!--info labels, task name,task priority and task deadline-->
+                                                    <div align="left" class="pull-left form-group">
+                                                        <t t-if="task.project_id and task.project_id.name">
+                                                            <label class="control-label">Project: <t t-raw="task.project_id.name"/></label>
+                                                        </t><br/> 
+                                                        <label class="control-label">Task: <t t-raw="task.name"/></label>
+                                                        <br/> 
+                                                        <t t-if="task.date_deadline">
+                                                            <label class="control-label" >Deadline: <t t-raw="task.date_deadline"/></label>
+                                                        </t>
+                                                    </div>
+                                                    <div align="right">
+                                                    <t t-if="task.priority">
+                                                        <label class=" control-label" >Priority: <t t-raw="task.priority"/></label>     
                                                     </t>
-                                                </div>
-                                                <div align="right">
-                                                <t t-if="task.priority">
-                                                    <label class=" control-label" >Priority: <t t-raw="task.priority"/></label>     
-                                                </t>
-                                                </div>
-                                                <br/><br/><br/>
-   
-                                                <!--Area to see the description of the task-->
-                                                <div class="panel panel-info">
-                                                  <div class="panel-heading"><strong>Description</strong></div>
-                                                  <div class="panel-body">
-                                                    <t t-raw="task.description"/>
-                                                  </div>
-                                                </div>
-                                                <br/><br/>
-                                                
-                                                <!--Text area to write notifications-->
-                                                <div align="left">
-                                                    <label for="NoticeInput">Work Notification</label>
-                                                    <textarea class="form-control" name="name" rows="5" placeholder="Enter your notification here" ><t t-if ="work and work.name" ><t t-esc="work.name"/></t></textarea>
-                                                </div>
-                                                <br/><br/> 
-                                             
-                                                 <!--Done button-->
-                                                <t t-if="task.check_started_work()">
-                                                <input name="done" type="submit" t-att-formaction="'/treport/%s/%s/2' %(user.id, task.id)" class="btn btn-default btn-lg pull-left mt8 " 
-                                                    value="Done"/>
-                                                </t>
-  
+                                                    </div>
+                                                    <br/><br/><br/>
+
+                                                    <!--Area to see the description of the task-->
+                                                    <div class="panel panel-info">
+                                                      <div class="panel-heading"><strong>Description</strong></div>
+                                                      <div class="panel-body">
+                                                        <t t-raw="task.description"/>
+                                                      </div>
+                                                    </div>
+                                                    <br/><br/>
+                                                    
+                                                    <!--Text area to write notifications-->
+                                                    <div align="left">
+                                                        <label for="NoticeInput">Work Notification</label>
+                                                        <textarea class="form-control" name="name" rows="5" placeholder="Enter your notification here" ><t t-if ="work and work.name" ><t t-esc="work.name"/></t></textarea>
+                                                    </div>
+                                                    <br/><br/> 
+                                                 
+                                                     <!--Done button-->
+                                                    <t t-if="task.check_started_work()">
+                                                    <input name="done" type="submit" t-att-formaction="'/treport/%s/%s/2' %(user.id, task.id)" class="btn btn-default btn-lg pull-left mt8 " 
+                                                        value="Done"/>
+                                                    </t>
+
                                                     <!--Start/Stop buttons-->
                                                     <t t-if="task.check_started_work()">
                                                     <input name="start" type="submit" t-att-formaction="'/treport/%s/%s/1' %(user.id, task.id)" class="btn btn-primary btn-lg pull-right mt8" 
@@ -189,16 +181,14 @@
                                                     <!--Save button-->
                                                     <input name="save" t-att-formaction="'/treport/%s/%s/0' %(user.id, task.id)" type="submit" class="btn btn-primary btn-lg pull-center mt8" value="Save" />
                                                     <br/><br/>
-                                            </form>
-
-                                        </div>
+                                                </form>
+                                            </div>
                                         </div> 
                                     </section>  
-                            </div>
-                        </section>
-
-                    </div>
-                </t> 
+                                </div>
+                            </section>
+                        </div>
+                    </t> 
                 </body>
             </html>
         </template>

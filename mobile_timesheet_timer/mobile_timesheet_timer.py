@@ -37,14 +37,11 @@ class project_timereport(http.Controller):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
         if not user:
             return werkzeug.utils.redirect("/treport/%s/list" %uid,302)
-            
-        
 
         ctx = {
             'user' : user,
-            'tasks': request.registry.get('project.task').browse(cr,uid,request.registry.get('project.task').search(cr,uid,['&',("user_id","=",user.id),("stage_id.name","!=","Done")], order='priority desc')
+            'tasks': request.registry.get('project.task').browse(cr,uid,request.registry.get('project.task').search(cr,uid,['&',("user_id","=",user.id),("stage_id.name","!=","Done")], order='sequence')
             ,context=context),
-            
             }
     
 
@@ -68,7 +65,7 @@ class project_timereport(http.Controller):
                 pool.get('project.task.work').browse(cr,uid,works[0]).name=post.get('name')
                 
             if start == 2:
-                stage=pool.get('project.task.type').search(cr,uid, ['&',('project_ids','=',task.project_id.id),('name', '=', 'Done')])
+                stage=request.env.ref('project.project_tt_deployment')
                 #if the statement above is correct return the first element in the list stage.
                 if len(stage) > 0:
                     task.stage_id=stage[0]

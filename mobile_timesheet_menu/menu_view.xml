@@ -13,5 +13,22 @@
                 </li>
             </xpath>
         </template>
+        <template>
+            <html>
+                <head>
+                    <!--FOR APPLE-->
+                    <meta name="apple-mobile-web-app-capable" content="yes"/>
+                    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+                    <link rel="apple-touch-startup-image" href="/mobile_timesheet_menu/static/description/menu.png"/>
+                    <link rel="apple-touch-icon" href="/mobile_timesheet_menu/static/description/menu.png"/>
+                    <link rel="apple-touch-icon-precomposed" sizes="128x128" href="/mobile_timesheet_menu/static/description/menu.png"/>
+
+                    <!--FOR ANDROID-->
+                    <meta name="mobile-web-app-capable" content="yes"/>
+                    <link rel="shortcut icon" sizes="196x196" href="/mobile_timesheet_menu/static/description/menu.png"/>
+                    <link rel="shortcut icon" sizes="128x128" href="/mobile_timesheet_menu/static/description/menu.png"/>
+                </head>
+            </html>
+        </template>
     </data>
 </openerp>

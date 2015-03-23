@@ -32,55 +32,36 @@ _logger = logging.getLogger(__name__)
 
 class project_timereport(http.Controller):
         
-    @http.route(['/timereport/<model("res.users"):user>', '/timereport/<model("res.users"):user>/list', '/timereport'], type='http', auth="user", website=True)
-    def timereport_list(self, user=False, clicked=False, **post):
-        cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-        if not user:
-            return werkzeug.utils.redirect("/timereport/%s/list" %uid,302)
+    @http.route(['/timereport', '/timereport/list'], type='http', auth="user", website=True)
+    def timereport_list(self, **post):
+        stage=request.env.ref('project.project_tt_deployment')
            
         ctx = {
-            'user' : user,
-            'tasks': request.registry.get('project.task').browse(cr,uid,request.registry.get('project.task').search(cr,uid,['&',("user_id","=",user.id),("stage_id.name","!=","Done")], order='priority desc')
-            ,context=context),
+            'tasks': request.env['project.task'].search(['&',("user_id","=",request.uid),("stage_id.id","!=",stage.id)], order='sequence'),
             }
-    
 
         return request.render('mobile_timesheet_timereport.project_timereport', ctx)
         
-    @http.route(['/timereport/<model("res.users"):user>/<model("project.task"):task>/<int:start>'], type='http', auth="user", website=True)
-    def timereport_form(self, user=False, task=False, start=False, **post):
-        cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-        if not user:
-            return werkzeug.utils.redirect("/timereport/%s/form" %uid,302)
-            
+    @http.route(['/timereport/<model("project.task"):task>'], type='http', auth="user", website=True)
+    def timereport_form(self, task=False, **post):          
         if request.httprequest.method == 'POST':
             _logger.warning("This is timereport post %s " % (post))
             
-            if start==1:
-                work_id = pool.get('project.task.work').create(cr,uid,{
-                    'task_id':task.id, 
-                    'name': post.get('name'),
-                    #'work': post.get('work'),
-                    'hours': self.checkTimeString(post.get('hours')),
-                    #'date': partner.property_account_position and partner.property_account_position.id or False,
-                    'user_id': user.id,
-                    })
+            work_id = request.env['project.task.work'].create({
+                'task_id':task.id, 
+                'name': post.get('name'),
+                #'work': post.get('work'),
+                'hours': self.checkTimeString(post.get('hours')),
+                #'date': partner.property_account_position and partner.property_account_position.id or False,
+                'user_id': request.uid,
+                })
             
-            elif start == 2:
-                stage=pool.get('project.task.type').search(cr,uid, ['&',('project_ids','=',task.project_id.id),('name', '=', 'Done')])
-                #if the statement above is correct return the first element in the list stage.
-                if len(stage) > 0:
-                    task.stage_id=stage[0]
+            if post.get("done"):
+                task.stage_id = request.env.ref('project.project_tt_deployment').id
             
-            return werkzeug.utils.redirect("/timereport/%s" %user.id)
+            return werkzeug.utils.redirect("/timereport/list" )
             
-        ctx = {
-            'user' : user,
-            'task': task,
-            }
-    
-
-        return request.render('mobile_timesheet_timereport.project_timereport_form', ctx)
+        return request.render('mobile_timesheet_timereport.project_timereport_form',{'task':task})
 
     def checkTimeString(self,string_time):
         try:
