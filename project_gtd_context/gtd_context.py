@@ -33,7 +33,7 @@ _logger = logging.getLogger(__name__)
 
 class controller(http.Controller):
     
-    @http.route(['/gtd', '/gtd/list'], type='http', auth="user", website=True)
+    @http.route(['/timereport/gtd', '/timereport/gtd/list'], type='http', auth="user", website=True)
     def gtd_list(self, **post):
         ctx = {
             'longitude' : post.get("longitude") if post else None,
@@ -54,20 +54,18 @@ class controller(http.Controller):
 
         return request.render('project_gtd_context.gtd_context', ctx)
 
-    @http.route(['/gtd/<model("project.task"):task>'], type='http', auth="user", website=True)
-    def timereport_form(self, task=False, **post):
+    @http.route(['/timereport/gtd/<model("project.gtd.context"):context>'], type='http', auth="user", website=True)
+    def timereport_form(self, context=False, **post):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-        
-        if request.httprequest.method == 'POST':
-            _logger.warning("This is gtd post %s " % (post))
-            
-            return werkzeug.utils.redirect("/gtd/%s" %user.id)
             
         ctx = {
-            'task': task,
+            'context' : context,
+            'contexts' : request.env['project.gtd.context'].search([]),
+            'tasks': request.env['project.task'].search(['&',('context_id','=',context and context.id),('user_id','=',uid)]),
+            'redirect' : '/gtd/%s' % task.id,
             }
     
-        return request.render('project_gtd_context.gtd_task_form', ctx)
+        return request.render('project_gtd_context.gtd_context', ctx)
 
 class project_gtd_context(models.Model):
     _inherit = "project.gtd.context"
@@ -91,9 +89,19 @@ class project_gtd_context(models.Model):
     #~ project_gtd_context_id = fields.Many2one("project.gtd.context")
 
 class project_task(models.Model):
-    _inherit= "project.task"
+    _inherit= "project.task"    
+    
+    start_time = fields.Datetime('Start Date', select="1")
+    stop_time = fields.Datetime('Stop Date', select="1")
+    boo = fields.Boolean(compute="loo", default=False)
     
     gtd_context_id = fields.One2many("project.gtd.context", inverse_name="task_ids")
+    
+    def loo(self):
+        if self.date_start:
+            if int(self.date_start).weekday() >= 0 and int(self.date_start).weekday() <= 4:
+                self.boo = True
+    
 
 
             

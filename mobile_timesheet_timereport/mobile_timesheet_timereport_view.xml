@@ -110,6 +110,9 @@
                                             <br></br>
                                             <h2><strong>Details</strong></h2>  <br/><br/>                                                      
                                             <form t-att-action="'/timereport/%s' % task.id" method="POST">
+                                                
+                                                <input name="redirect" type="hidden"/>
+                                                
                                                 <!--info labels, task name,task priority and task deadline-->
                                                 <div align="left" class="pull-left form-group">
                                                         <t t-if="task.project_id and task.project_id.name">
@@ -136,7 +139,7 @@
                                                   </div>
                                                 </div>
                                                 <br/>
-                                                
+
                                                 <!--Time input box-->
                                                 <div class="pull-left form-group">
                                                     <label for="hours">Time Spent</label>

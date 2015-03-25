@@ -59,7 +59,10 @@ class project_timereport(http.Controller):
             if post.get("done"):
                 task.stage_id = request.env.ref('project.project_tt_deployment').id
             
-            return werkzeug.utils.redirect("/timereport/list" )
+            if post.get('redirect',False):
+                return werkzeug.utils.redirect(post.get('redirect'))
+            else:
+                return werkzeug.utils.redirect("/timereport/list")
             
         return request.render('mobile_timesheet_timereport.project_timereport_form',{'task':task})
 

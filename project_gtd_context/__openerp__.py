@@ -30,8 +30,7 @@ qwepoqweopk
 'author': 'Vertel AB',
 'website': 'http://www.vertel.se',
 'depends': ['project','project_gtd'],
-'data': ['gtd_context_view.xml',
-],
+'data': ['gtd_context_view.xml',],
 'installable': True,
 }
 # vim:expandtab:smartindent:tabstop=4s:softtabstop=4:shiftwidth=4:
