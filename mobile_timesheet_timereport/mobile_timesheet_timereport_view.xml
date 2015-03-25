@@ -111,7 +111,7 @@
                                             <h2><strong>Details</strong></h2>  <br/><br/>                                                      
                                             <form t-att-action="'/timereport/%s' % task.id" method="POST">
                                                 
-                                                <input name="redirect" type="hidden"/>
+                                                <input name="redirect" type="hidden" t-att-value="redirect or '' "/>
                                                 
                                                 <!--info labels, task name,task priority and task deadline-->
                                                 <div align="left" class="pull-left form-group">

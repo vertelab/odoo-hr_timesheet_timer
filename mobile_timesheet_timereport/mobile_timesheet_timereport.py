@@ -63,8 +63,8 @@ class project_timereport(http.Controller):
                 return werkzeug.utils.redirect(post.get('redirect'))
             else:
                 return werkzeug.utils.redirect("/timereport/list")
-            
-        return request.render('mobile_timesheet_timereport.project_timereport_form',{'task':task})
+        
+        return request.render('mobile_timesheet_timereport.project_timereport_form',{'task':task, 'redirect': post.get('redirect',False)})
 
     def checkTimeString(self,string_time):
         try:

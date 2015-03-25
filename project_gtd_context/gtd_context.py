@@ -38,6 +38,7 @@ class controller(http.Controller):
         ctx = {
             'longitude' : post.get("longitude") if post else None,
             'latitude' : post.get("latitude") if post else None,
+            'redirect' : '/timereport/gtd',
             }
         stage = request.env.ref("project.project_tt_deployment")
         if ctx["longitude"] and ctx["latitude"]:
@@ -48,21 +49,21 @@ class controller(http.Controller):
                 if record.check_position(float(ctx["longitude"]), float(ctx["latitude"]), 0.01):
                     contexts_list.append(record.id)
             _logger.info(contexts_list)
-            ctx['tasks']= request.env['project.task'].search(['&',("context_id","in",contexts_list),("stage_id.id","!=",stage.id)], order='sequence')
+            ctx['tasks']= request.env['project.task'].search(['&',("context_id","in",contexts_list),('user_id','=',request.uid),("stage_id.id","!=",stage.id)], order='sequence')
         else:
             ctx['tasks']= request.env['project.task'].search(['&',("user_id","=",request.uid),("stage_id.id","!=",stage.id)], order='sequence')
 
         return request.render('project_gtd_context.gtd_context', ctx)
 
-    @http.route(['/timereport/gtd/<model("project.gtd.context"):context>'], type='http', auth="user", website=True)
-    def timereport_form(self, context=False, **post):
+    @http.route(['/timereport/gtd/<model("project.gtd.context"):gtd_context>'], type='http', auth="user", website=True)
+    def timereport_form(self, gtd_context=False, **post):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-            
+        stage = request.env.ref("project.project_tt_deployment")
         ctx = {
-            'context' : context,
+            'context' : gtd_context,
             'contexts' : request.env['project.gtd.context'].search([]),
-            'tasks': request.env['project.task'].search(['&',('context_id','=',context and context.id),('user_id','=',uid)]),
-            'redirect' : '/gtd/%s' % task.id,
+            'tasks': request.env['project.task'].search(['&',('context_id','=',gtd_context and gtd_context.id),('user_id','=',uid),("stage_id.id","!=",stage.id)]),
+            'redirect' : '/timereport/gtd/%s' % gtd_context.id,
             }
     
         return request.render('project_gtd_context.gtd_context', ctx)
@@ -73,8 +74,7 @@ class project_gtd_context(models.Model):
     latitude = fields.Float(string = "Lat")
     longitude = fields.Float(string = "Long")
     #~ gps_base_base_ids = fields.One2many("gps_base.base", inverse_name="project_gtd_context_id")
-    start_time = fields.Datetime('Start Date', select="1")
-    stop_time = fields.Datetime('Stop Date', select="1")
+    #~ calendar_id = fields.One2many("resource.resource_calendar", inverse_name="gtd_calendar")
     task_ids = fields.Many2one("project.task", inverse_name="gtd_context_id")
     
     def check_position(self, longitude, latitude, distance):
@@ -90,17 +90,24 @@ class project_gtd_context(models.Model):
 
 class project_task(models.Model):
     _inherit= "project.task"    
-    
-    start_time = fields.Datetime('Start Date', select="1")
-    stop_time = fields.Datetime('Stop Date', select="1")
-    boo = fields.Boolean(compute="loo", default=False)
-    
+ 
     gtd_context_id = fields.One2many("project.gtd.context", inverse_name="task_ids")
+
+#~ class calendar(models.Model):
+    #~ _inherit="resource.resource_calendar"
     
-    def loo(self):
-        if self.date_start:
-            if int(self.date_start).weekday() >= 0 and int(self.date_start).weekday() <= 4:
-                self.boo = True
+    #~ gtd_calendar = fields.Many2one("project.gtd.context", inverse_name="calendar_id")
+    
+    #~ start_time = fields.Datetime('Start Date', select="1")
+    #~ stop_time = fields.Datetime('Stop Date', select="1")
+    #~ boo = fields.Boolean(compute="loo", default=False)
+    #~ 
+    #~ 
+    #~ 
+    #~ def loo(self):
+        #~ if self.date_start:
+            #~ if int(self.date_start).weekday() >= 0 and int(self.date_start).weekday() <= 4:
+                #~ self.boo = True
     
 
 
