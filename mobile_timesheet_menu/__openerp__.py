@@ -23,7 +23,7 @@
 'version': '0.1',
 'category': 'Project',
 'description': """
-Dropdown Menu.
+Inserts a dropdown menu-button option in your menu-view that contains other module connected to it.
 ===================================================
 """,
 'author': 'Vertel AB',
