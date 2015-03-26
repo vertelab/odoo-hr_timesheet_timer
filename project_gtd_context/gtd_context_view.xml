@@ -46,7 +46,50 @@
                 <body>
                     <t t-call="website.layout">
                         <div id="wrap" class="oe_structure oe_empty"> 
-
+                    
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-3 col-md-3">
+                                        <div class="panel-group" id="accordion">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Context</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseOne" class="panel-collapse collapse ">
+                                                    <div class="panel-body">
+                                                        <table class="table">
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="/timereport/gtd">All</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="/timereport/gtd/1">Office</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="/timereport/gtd/4">Car</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="/timereport/gtd/2">Travel</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="/timereport/gtd/3">Home</a>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+<!--
                             <section class="mb32 mt16">
                                 <div class="container">
                                     <section class="oe_container oe_dark">
@@ -68,11 +111,185 @@
                                                         </t>
                                                     </ul>
                                                 </font>
+-->
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Timebox</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseTwo" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <table class="table">
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="/timereport/gtd/time/1">Today</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="/timereport/gtd/time/2">This Week</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="/timereport/gtd/time/3">Long Term</a>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div> 
-                                    </section>  
+<!--
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-user">
+                                                        </span>Account</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseThree" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <table class="table">
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="http://www.jquery2dotnet.com">Change Password</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="http://www.jquery2dotnet.com">Notifications</a> <span class="label label-info">5</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="http://www.jquery2dotnet.com">Import/Export</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span class="glyphicon glyphicon-trash text-danger"></span><a href="http://www.jquery2dotnet.com" class="text-danger">
+                                                                        Delete Account</a>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+-->
+<!--
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-file">
+                                                        </span>Reports</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseFour" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <table class="table">
+                                                            <tr>
+                                                                <td>
+                                                                    <span class="glyphicon glyphicon-usd"></span><a href="http://www.jquery2dotnet.com">Sales</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span class="glyphicon glyphicon-user"></span><a href="http://www.jquery2dotnet.com">Customers</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span class="glyphicon glyphicon-tasks"></span><a href="http://www.jquery2dotnet.com">Products</a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <span class="glyphicon glyphicon-shopping-cart"></span><a href="http://www.jquery2dotnet.com">Shopping Cart</a>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+-->
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9 col-md-9">
+                                        <div class="well">
+                                                                    
+                                            <script>
+                                            var x = document.getElementById("demo");
+
+                                            function getLocation() {
+                                                if (navigator.geolocation) {
+                                                    navigator.geolocation.getCurrentPosition(showPosition);
+                                                } else { 
+                                                    document.getElementById("latitude").value=False;
+                                                    document.getElementById("longitude").value=False;
+                                                }
+                                            }
+
+                                            function showPosition(position) {
+                                                document.getElementById("latitude").value=position.coords.latitude;
+                                                document.getElementById("longitude").value=position.coords.longitude;
+                                            }
+                                            </script>
+                                            
+                                            <section class="mb32 mt16">
+                                                <div class="container">
+                                                       
+                                                    <form method="POST" action="/timereport/gtd" name="gpsform">
+                                                    <div class="col-md-6">   
+                                                        <input type="hidden" id="longitude" name="longitude"/>
+                                                        <input type="hidden" id="latitude" name="latitude"/>
+                                                        <button type="submit">
+                                                        Show tasks near me
+                                                        </button>
+                                                    </div> 
+                                                    </form> 
+                                                    <br/><br/>
+                                                    <script>
+                                                    getLocation();
+                                                    </script>
+                                                    <section class="oe_container oe_dark">
+                                                        <div class="oe_row">           
+                                                            <div>
+                                                                <br></br>
+                                                                <font size="5"><strong>Todo List </strong></font><br/>                                                  
+                                                                <font size="4">  
+                                                                    <ul>
+                                                                        <t t-set="print_header" t-value="''"/>
+                                                                        <t t-foreach="tasks" t-as="t">   
+                                                                            <t t-if="t.context_id and t.context_id.name">     
+                                                                                <t t-if="t.context_id and t.context_id.name and (print_header != t.context_id.name)">
+                                                                                    <t t-set="print_header" t-value="t.context_id.name"/>
+                                                                                      <font size="5"><strong>- <t t-esc="t.context_id.name"/></strong></font><br/>
+                                                                                </t>
+                                                                            </t>                   
+                                                                            <li><a t-att-href="'/timereport/%s?redirect=%s' % (t.id,redirect)">
+                                                                               <t t-esc="t.name"/></a>
+<!--
+                                                                               <t t-if="t.context_id.name">
+                                                                                   <span style="font-size:0.7em">
+                                                                                   (<t t-esc="t.context_id.name"/>)
+                                                                                   </span>
+                                                                               </t>
+-->
+                                                                            </li> 
+                                                                        </t>
+                                                                    </ul>
+                                                                </font>
+                                                            </div>
+                                                        </div> 
+                                                    </section>  
+                                                </div>
+                                            </section>
+
+                                        </div>
+                                    </div>
                                 </div>
-                            </section>
+                            </div>
                         </div>
                     </t>
                 </body>
@@ -97,6 +314,7 @@
                 <field name="sequence" position="after">
                     <field string="Latitude" name="latitude"/>
                     <field string="Longitude" name="longitude"/>
+                    <field string="Calendar" name="calendar_id"/>
 <!--
                     <field string="Start time" name="start_time"/>
                     <field string="Stop time" name="stop_time"/>
