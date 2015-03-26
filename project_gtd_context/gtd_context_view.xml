@@ -4,244 +4,174 @@
          <!--GTD option in dropdown menu-->
         <template id="layout" inherit_id="mobile_timesheet_menu.layout">
             <xpath expr='//ul[@id="mobile-timesheet-menu"]' position="inside">                 
-                <li><a href="/timereport/gtd" role="menuitem">GTD</a></li>
+                <li><a href="/timereport/gtd/list" role="menuitem">GTD</a></li>
             </xpath>
         </template>
-              
+        
+        <template id="get_location" name="Get Location">
+            <t t-call="website.layout">
+            <script>
+
+                function getLocation() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(showPosition);
+                    } else { 
+                        document.getElementById("latitude").value=False;
+                        document.getElementById("longitude").value=False;
+                    };
+                    window.setTimeout(function () {
+                        document.getElementById("position_form").submit();
+                        }
+                    ,500);
+                };
+                
+
+                function showPosition(position) {
+                    document.getElementById("latitude").value=position.coords.latitude;
+                    document.getElementById("longitude").value=position.coords.longitude;
+                    
+                }
+            </script>
+            <form method="POST" action="/timereport/gtd" name="gpsform" id="position_form">  
+                <input type="hidden" id="longitude" name="longitude"/>
+                <input type="hidden" id="latitude" name="latitude"/>
+                <input type="hidden" t-att-value="update_position" name="update_position"/>
+            </form>
+            <div class="container text-center">
+                <strong>...Looking For Position...</strong><br/><br/>
+                <a href="/timereport/gtd/list" class="btn btn-primary" role="button">Cancel</a>
+            </div>
+                <script>
+                getLocation();
+                </script>
+            </t>
+        </template>
+
         <template id="gtd_context" name= "GTD context">
-            <html style="height: 100%">
-                <head>
-                    <title>Getting things done</title>
-                </head>
-                <body>
-                    <t t-call="website.layout">
-                        <div id="wrap" class="oe_structure oe_empty">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm-2 col-md-2">
-                                        <div class="panel-group" id="accordion">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Context</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseOne" class="panel-collapse collapse ">
-                                                    <div class="panel-body">
-                                                        <table class="table">
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="/timereport/gtd">All</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="/timereport/gtd/1">Office</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="/timereport/gtd/4">Car</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="/timereport/gtd/2">Travel</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="/timereport/gtd/3">Home</a>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
+            <title>Getting things done</title>
+                <t t-call="website.layout">
+                    <div id="wrap" class="oe_structure oe_empty">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-2 col-md-2">
+                                    <div class="panel-group" id="accordion">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Context</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne" class="panel-collapse collapse ">
+                                                <div class="panel-body">
+                                                    <table class="table">
+                                                        <tr>
+                                                            <td>
+                                                                <a href="/timereport/gtd">Tasks Near Me</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="/timereport/gtd/list">All</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="/timereport/gtd/1">Office</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="/timereport/gtd/4">Car</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="/timereport/gtd/2">Travel</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="/timereport/gtd/3">Home</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
                                             </div>
-
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Timebox</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseTwo" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        <table class="table">
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="/timereport/gtd/time/1">Today</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="/timereport/gtd/time/2">This Week</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="/timereport/gtd/time/3">Long Term</a>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br/>
-                                             <script>
-                                                var x = document.getElementById("demo");
-
-                                                function getLocation() {
-                                                    if (navigator.geolocation) {
-                                                        navigator.geolocation.getCurrentPosition(showPosition);
-                                                    } else { 
-                                                        document.getElementById("latitude").value=False;
-                                                        document.getElementById("longitude").value=False;
-                                                    }
-                                                }
-
-                                                function showPosition(position) {
-                                                    document.getElementById("latitude").value=position.coords.latitude;
-                                                    document.getElementById("longitude").value=position.coords.longitude;
-                                                }
-                                            </script>  
-                                            <form method="POST" action="/timereport/gtd" name="gpsform">
-                                                <div class="col-md-6">   
-                                                    <input type="text" id="longitude" name="longitude"/>
-                                                    <input type="text" id="latitude" name="latitude"/>
-                                                    <button type="submit" class="btn btn-primary">
-                                                    Show tasks near me
-                                                    </button>
-                                                </div> 
-                                            </form> 
-                                            <br/><br/>
-                                            <script>
-                                                getLocation();
-                                            </script>
-<!--
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-user">
-                                                        </span>Account</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseThree" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        <table class="table">
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="http://www.jquery2dotnet.com">Change Password</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="http://www.jquery2dotnet.com">Notifications</a> <span class="label label-info">5</span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="http://www.jquery2dotnet.com">Import/Export</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <span class="glyphicon glyphicon-trash text-danger"></span><a href="http://www.jquery2dotnet.com" class="text-danger">
-                                                                        Delete Account</a>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
--->
-<!--
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-file">
-                                                        </span>Reports</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseFour" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        <table class="table">
-                                                            <tr>
-                                                                <td>
-                                                                    <span class="glyphicon glyphicon-usd"></span><a href="http://www.jquery2dotnet.com">Sales</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <span class="glyphicon glyphicon-user"></span><a href="http://www.jquery2dotnet.com">Customers</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <span class="glyphicon glyphicon-tasks"></span><a href="http://www.jquery2dotnet.com">Products</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <span class="glyphicon glyphicon-shopping-cart"></span><a href="http://www.jquery2dotnet.com">Shopping Cart</a>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
--->
-
                                         </div>
-                                    </div> 
-                                    
-                                    <div class="col-sm-10 col-md-10">
-                                        <div class="well">
-                                            <section class="mb32 mt16">
-                                                <div class="container">
-                                                    <section class="oe_container oe_dark">
-                                                        <div class="oe_row">           
-                                                            <div>
-                                                                <br></br>
-                                                                <h2><strong>Todo List </strong></h2><br/>                                                  
-                                                                <font size="4">  
-                                                                    <ul>
-                                                                        <t t-set="print_header" t-value="''"/>
-                                                                        <t t-foreach="tasks" t-as="t">   
-                                                                            <t t-if="t.context_id and t.context_id.name">     
-                                                                                <t t-if="t.context_id and t.context_id.name and (print_header != t.context_id.name)">
-                                                                                    <t t-set="print_header" t-value="t.context_id.name"/>
-                                                                                      <font size="4"><em><t t-esc="t.context_id.name"/></em></font><br/>
-                                                                                </t>
-                                                                            </t>                   
-                                                                            <li><a t-att-href="'/timereport/%s?redirect=%s' % (t.id,redirect)">
-                                                                               <t t-esc="t.name"/></a>
-<!--
-                                                                               <t t-if="t.context_id.name">
-                                                                                   <span style="font-size:0.7em">
-                                                                                   (<t t-esc="t.context_id.name"/>)
-                                                                                   </span>
-                                                                               </t>
--->
-                                                                            </li> 
-                                                                        </t>
-                                                                    </ul>
-                                                                </font>
-                                                            </div>
-                                                        </div> 
-                                                    </section>  
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Timebox</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseTwo" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <table class="table">
+                                                        <tr>
+                                                            <td>
+                                                                <a href="/timereport/gtd/time/1">Today</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="/timereport/gtd/time/2">This Week</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="/timereport/gtd/time/3">Long Term</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
-                                            </section>
-                                        </div>
+                                            </div>
+                                        </div><br/>
+                                    </div>
+                                </div> 
+                                <div class="col-sm-10 col-md-10">
+                                    <div class="well">
+                                        <section class="mb32 mt16">
+                                            <div class="container">
+                                                <section class="oe_container oe_dark">
+                                                    <div class="oe_row">           
+                                                        <div><br></br>
+                                                            <h2><strong>Todo List </strong></h2><br/>                                                  
+                                                            <font size="4">  
+                                                                <ul>
+                                                                    <t t-set="print_header" t-value="''"/>
+                                                                    <t t-foreach="tasks" t-as="t">   
+                                                                        <t t-if="t.context_id and t.context_id.name">     
+                                                                            <t t-if="t.context_id and t.context_id.name and (print_header != t.context_id.name)">
+                                                                                <t t-set="print_header" t-value="t.context_id.name"/>
+                                                                                  <font size="4"><em><t t-esc="t.context_id.name"/></em></font><br/>
+                                                                            </t>
+                                                                        </t>                   
+                                                                        <li><a t-att-href="'/timereport/%s?redirect=%s' % (t.id,redirect)">
+                                                                           <t t-esc="t.name"/></a>
+<!--
+                                                                           <t t-if="t.context_id.name">
+                                                                               <span style="font-size:0.7em">
+                                                                               (<t t-esc="t.context_id.name"/>)
+                                                                               </span>
+                                                                           </t>
+-->
+                                                                        </li> 
+                                                                    </t>
+                                                                </ul>
+                                                            </font>
+                                                        </div>
+                                                    </div> 
+                                                </section>  
+                                            </div>
+                                        </section>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </t>
-                </body>
-            </html>
+                    </div>
+                </t>
         </template>
-        
+    
         <template id="gtd_task_form" inherit_id="mobile_timesheet_timereport.project_timereport_form" name="gtd task form">
             <xpath expr="//t[@t-if='task.project_id and task.project_id.name']" position="after">
                 <t t-if="task.context_id.name"> 
@@ -249,8 +179,6 @@
                 <br/></t>
             </xpath>
         </template>
-        
-        
         
         <record id="view_gtd_context_form2" model="ir.ui.view">
             <field name="name">project.gtd.context.form</field>

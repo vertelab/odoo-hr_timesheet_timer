@@ -33,28 +33,43 @@ _logger = logging.getLogger(__name__)
 
 class controller(http.Controller):
     
-    @http.route(['/timereport/gtd', '/timereport/gtd/list'], type='http', auth="user", website=True)
+    @http.route(['/timereport/gtd/list'], type='http', auth="user", website=True)
     def gtd_list(self, **post):
         ctx = {
             'longitude' : post.get("longitude") if post else None,
             'latitude' : post.get("latitude") if post else None,
             'redirect' : '/timereport/gtd',
+            'update_position' : not post.get("update_position", "True") == "True",
             #~ 'calendar_id' : calendar_id.name if ('resource_calendar_attendace.dayofweek')>= 0 or ('resource_calendar_attendace.dayofweek')<= 4 else None
             }
         stage = request.env.ref("project.project_tt_deployment")
-        if ctx["longitude"] and ctx["latitude"]:
-            contexts = request.env["project.gtd.context"].search([])
-            _logger.info(contexts)
-            contexts_list = []
-            for record in contexts:
-                if record.check_position(float(ctx["longitude"]), float(ctx["latitude"]), 0.01):
-                    contexts_list.append(record.id)
-            _logger.info(contexts_list)
-            ctx['tasks']= request.env['project.task'].search(['&',("context_id","in",contexts_list),('user_id','=',request.uid),("stage_id.id","!=",stage.id)], order='sequence').sorted(key=lambda r: r.context_id.name)
-        else:
-            ctx['tasks']= request.env['project.task'].search(['&',("user_id","=",request.uid),("stage_id.id","!=",stage.id)], order='sequence').sorted(key=lambda r: r.context_id.name)
-        
+        ctx['tasks']= request.env['project.task'].search(['&',("user_id","=",request.uid),("stage_id.id","!=",stage.id)], order='sequence').sorted(key=lambda r: r.context_id.name)
         return request.render('project_gtd_context.gtd_context', ctx)
+
+    @http.route(['/timereport/gtd'], type='http', auth="user", website=True)
+    def get_location(self, **post):
+        ctx = {
+            'longitude' : post.get("longitude") if post else None,
+            'latitude' : post.get("latitude") if post else None,
+            'redirect' : '/timereport/gtd',
+            'update_position' : not post.get("update_position", "True") == "True",
+        }
+        _logger.info('post: %s long: %s lat: %s' % (post, ctx['longitude'], ctx['latitude']))
+        if ctx["update_position"]:
+            stage = request.env.ref("project.project_tt_deployment")
+            contexts_list = []
+            if ctx["longitude"] and ctx["latitude"]:
+                contexts = request.env["project.gtd.context"].search([])
+                _logger.info(contexts)
+                for record in contexts:
+                    if record.check_position(float(ctx["longitude"]), float(ctx["latitude"]), 0.01):
+                        contexts_list.append(record.id)
+                _logger.info(contexts_list)
+            ctx['tasks']= request.env['project.task'].search(['&',("context_id","in",contexts_list),('user_id','=',request.uid),("stage_id.id","!=",stage.id)], order='sequence')
+            
+            return request.render('project_gtd_context.gtd_context', ctx)
+            
+        return request.render('project_gtd_context.get_location', ctx) 
 
     @http.route(['/timereport/gtd/<model("project.gtd.context"):gtd_context>'], type='http', auth="user", website=True)
     def gtd_context(self, gtd_context=False, **post):
@@ -87,7 +102,6 @@ class project_gtd_context(models.Model):
 
     latitude = fields.Float(string = "Lat")
     longitude = fields.Float(string = "Long")
-    #~ gps_base_base_ids = fields.One2many("gps_base.base", inverse_name="project_gtd_context_id")
     calendar_id = fields.One2many("resource.calendar", inverse_name="gtd_calendar")
     task_ids = fields.Many2one("project.task", inverse_name="gtd_context_id")
     
@@ -96,11 +110,6 @@ class project_gtd_context(models.Model):
             if math.sqrt(math.pow(longitude-self.longitude, 2)+math.pow(latitude-self.latitude, 2)) <= distance:
                 return True
         return False
-    
-#~ class gps_base_base(models.Model):
-    #~ _inherit = "gps_base.base"
-    #~ 
-    #~ project_gtd_context_id = fields.Many2one("project.gtd.context")
 
 class project_task(models.Model):
     _inherit= "project.task"    
@@ -116,14 +125,8 @@ class calendar(models.Model):
     #~ stop_time = fields.Datetime('Stop Date', select="1")
     #~ boo = fields.Boolean(compute="loo", default=False)
     #~ 
-    #~ 
-    #~ 
+
     #~ def loo(self):
         #~ if self.date_start:
             #~ if int(self.date_start).weekday() >= 0 and int(self.date_start).weekday() <= 4:
                 #~ self.boo = True
-    
-
-
-            
-            
