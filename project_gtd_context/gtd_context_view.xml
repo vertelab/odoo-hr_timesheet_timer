@@ -1,14 +1,11 @@
 <?xml version="1.0" ?>
 <openerp>
     <data>        
-        <template id="gtd_context" name= "GTD context">
+        
+        <template id="get_location" name="Get Location">
             <html style="height: 100%">
-                <head>
-                    <title>Getting things done</title>
-                </head>
-                <body>
-                    <script>
-                    var x = document.getElementById("demo");
+            <body>
+           <script>
 
                     function getLocation() {
                         if (navigator.geolocation) {
@@ -16,34 +13,42 @@
                         } else { 
                             document.getElementById("latitude").value=False;
                             document.getElementById("longitude").value=False;
-                        }
-                    }
+                        };
+                        window.setTimeout(function () {
+                            document.getElementById("position_form").submit();
+                            }
+                        ,500);
+                    };
+                    
 
                     function showPosition(position) {
                         document.getElementById("latitude").value=position.coords.latitude;
                         document.getElementById("longitude").value=position.coords.longitude;
+                        
                     }
                     </script>
-
+                    <form method="POST" action="/timereport/gtd/getlocation" name="gpsform" id="position_form">  
+                            <input type="text" id="longitude" name="longitude"/>
+                        <input type="text" id="latitude" name="latitude"/>
+                        <input type="text" t-att-value="update_position" name="update_position"/>
+                    </form>
+                        <script>
+                        getLocation();
+                        </script>
+                    </body>
+                    </html>
+        </template>
+        <template id="gtd_context" name= "GTD context">
+            <html style="height: 100%">
+                <head>
+                    <title>Getting things done</title>
+                </head>
+                <body>
                     <t t-call="website.layout">
                         <div id="wrap" class="oe_structure oe_empty"> 
 
                             <section class="mb32 mt16">
                                 <div class="container">
-                                       
-                                    <form method="POST" action="/timereport/gtd" name="gpsform">
-                                    <div class="col-md-6">   
-                                        <input type="hidden" id="longitude" name="longitude"/>
-                                        <input type="hidden" id="latitude" name="latitude"/>
-                                        <button type="submit">
-                                        Show tasks near me
-                                        </button>
-                                    </div> 
-                                    </form> 
-                                    <br/><br/>
-                                    <script>
-                                    getLocation();
-                                    </script>
                                     <section class="oe_container oe_dark">
                                         <div class="oe_row">           
                                             <div>
@@ -92,8 +97,10 @@
                 <field name="sequence" position="after">
                     <field string="Latitude" name="latitude"/>
                     <field string="Longitude" name="longitude"/>
+<!--
                     <field string="Start time" name="start_time"/>
                     <field string="Stop time" name="stop_time"/>
+-->
                     
 <!--
                      <group>

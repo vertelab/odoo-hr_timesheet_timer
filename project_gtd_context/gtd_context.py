@@ -39,6 +39,7 @@ class controller(http.Controller):
             'longitude' : post.get("longitude") if post else None,
             'latitude' : post.get("latitude") if post else None,
             'redirect' : '/timereport/gtd',
+            'update_position' : not post.get("update_position", "True") == "True",
             }
         stage = request.env.ref("project.project_tt_deployment")
         if ctx["longitude"] and ctx["latitude"]:
@@ -52,8 +53,35 @@ class controller(http.Controller):
             ctx['tasks']= request.env['project.task'].search(['&',("context_id","in",contexts_list),('user_id','=',request.uid),("stage_id.id","!=",stage.id)], order='sequence')
         else:
             ctx['tasks']= request.env['project.task'].search(['&',("user_id","=",request.uid),("stage_id.id","!=",stage.id)], order='sequence')
-
+                
         return request.render('project_gtd_context.gtd_context', ctx)
+
+    @http.route(['/timereport/gtd/getlocation'], type='http', auth="user", website=True)
+    def get_location(self, **post):
+        ctx = {
+            'longitude' : post.get("longitude") if post else None,
+            'latitude' : post.get("latitude") if post else None,
+            'redirect' : '/timereport/gtd',
+            'update_position' : not post.get("update_position", "True") == "True",
+        }
+        _logger.info('post: %s long: %s lat: %s' % (post, ctx['longitude'], ctx['latitude']))
+        if ctx["update_position"]:
+            stage = request.env.ref("project.project_tt_deployment")
+            contexts_list = []
+            if ctx["longitude"] and ctx["latitude"]:
+                contexts = request.env["project.gtd.context"].search([])
+                _logger.info(contexts)
+                for record in contexts:
+                    if record.check_position(float(ctx["longitude"]), float(ctx["latitude"]), 0.01):
+                        contexts_list.append(record.id)
+                _logger.info(contexts_list)
+            ctx['tasks']= request.env['project.task'].search(['&',("context_id","in",contexts_list),('user_id','=',request.uid),("stage_id.id","!=",stage.id)], order='sequence')
+            
+            return request.render('project_gtd_context.gtd_context', ctx)
+            
+        return request.render('project_gtd_context.get_location', ctx) 
+            
+ 
 
     @http.route(['/timereport/gtd/<model("project.gtd.context"):gtd_context>'], type='http', auth="user", website=True)
     def timereport_form(self, gtd_context=False, **post):
