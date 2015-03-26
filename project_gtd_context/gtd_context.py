@@ -39,6 +39,7 @@ class controller(http.Controller):
             'longitude' : post.get("longitude") if post else None,
             'latitude' : post.get("latitude") if post else None,
             'redirect' : '/timereport/gtd',
+            #~ 'calendar_id' : calendar_id.name if ('resource_calendar_attendace.dayofweek')>= 0 or ('resource_calendar_attendace.dayofweek')<= 4 else None
             }
         stage = request.env.ref("project.project_tt_deployment")
         if ctx["longitude"] and ctx["latitude"]:
@@ -49,10 +50,10 @@ class controller(http.Controller):
                 if record.check_position(float(ctx["longitude"]), float(ctx["latitude"]), 0.01):
                     contexts_list.append(record.id)
             _logger.info(contexts_list)
-            ctx['tasks']= request.env['project.task'].search(['&',("context_id","in",contexts_list),('user_id','=',request.uid),("stage_id.id","!=",stage.id)], order='sequence')
+            ctx['tasks']= request.env['project.task'].search(['&',("context_id","in",contexts_list),('user_id','=',request.uid),("stage_id.id","!=",stage.id)], order='sequence').sorted(key=lambda r: r.context_id.name)
         else:
-            ctx['tasks']= request.env['project.task'].search(['&',("user_id","=",request.uid),("stage_id.id","!=",stage.id)], order='sequence')
-
+            ctx['tasks']= request.env['project.task'].search(['&',("user_id","=",request.uid),("stage_id.id","!=",stage.id)], order='sequence').sorted(key=lambda r: r.context_id.name)
+        
         return request.render('project_gtd_context.gtd_context', ctx)
 
     @http.route(['/timereport/gtd/<model("project.gtd.context"):gtd_context>'], type='http', auth="user", website=True)
@@ -74,7 +75,7 @@ class project_gtd_context(models.Model):
     latitude = fields.Float(string = "Lat")
     longitude = fields.Float(string = "Long")
     #~ gps_base_base_ids = fields.One2many("gps_base.base", inverse_name="project_gtd_context_id")
-    #~ calendar_id = fields.One2many("resource.resource_calendar", inverse_name="gtd_calendar")
+    calendar_id = fields.One2many("resource.calendar", inverse_name="gtd_calendar")
     task_ids = fields.Many2one("project.task", inverse_name="gtd_context_id")
     
     def check_position(self, longitude, latitude, distance):
@@ -93,10 +94,10 @@ class project_task(models.Model):
  
     gtd_context_id = fields.One2many("project.gtd.context", inverse_name="task_ids")
 
-#~ class calendar(models.Model):
-    #~ _inherit="resource.resource_calendar"
+class calendar(models.Model):
+    _inherit="resource.calendar"
     
-    #~ gtd_calendar = fields.Many2one("project.gtd.context", inverse_name="calendar_id")
+    gtd_calendar = fields.Many2one("project.gtd.context", inverse_name="calendar_id")
     
     #~ start_time = fields.Datetime('Start Date', select="1")
     #~ stop_time = fields.Datetime('Stop Date', select="1")
