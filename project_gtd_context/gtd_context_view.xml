@@ -52,12 +52,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-<!--
+
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-th">
-                                                        </span>Modules</a>
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Timebox</a>
                                                     </h4>
                                                 </div>
                                                 <div id="collapseTwo" class="panel-collapse collapse">
@@ -65,29 +64,23 @@
                                                         <table class="table">
                                                             <tr>
                                                                 <td>
-                                                                    <a href="http://www.jquery2dotnet.com">Orders</a> <span class="label label-success">$ 320</span>
+                                                                    <a href="/timereport/gtd/time/1">Today</a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
-                                                                    <a href="http://www.jquery2dotnet.com">Invoices</a>
+                                                                    <a href="/timereport/gtd/time/2">This Week</a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
-                                                                    <a href="http://www.jquery2dotnet.com">Shipments</a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="http://www.jquery2dotnet.com">Tex</a>
+                                                                    <a href="/timereport/gtd/time/3">Long Term</a>
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                     </div>
                                                 </div>
                                             </div>
--->
 <!--
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
@@ -238,13 +231,6 @@
                                     </div>
                                 </div>
                             </div>
-                           
-
-                    
-                    
-                   
-
-                            
                         </div>
                     </t>
                 </body>

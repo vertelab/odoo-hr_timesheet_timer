@@ -57,7 +57,7 @@ class controller(http.Controller):
         return request.render('project_gtd_context.gtd_context', ctx)
 
     @http.route(['/timereport/gtd/<model("project.gtd.context"):gtd_context>'], type='http', auth="user", website=True)
-    def timereport_form(self, gtd_context=False, **post):
+    def gtd_context(self, gtd_context=False, **post):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
         stage = request.env.ref("project.project_tt_deployment")
         ctx = {
@@ -65,6 +65,19 @@ class controller(http.Controller):
             'contexts' : request.env['project.gtd.context'].search([]),
             'tasks': request.env['project.task'].search(['&',('context_id','=',gtd_context and gtd_context.id),('user_id','=',uid),("stage_id.id","!=",stage.id)]),
             'redirect' : '/timereport/gtd/%s' % gtd_context.id,
+            }
+    
+        return request.render('project_gtd_context.gtd_context', ctx)
+        
+    @http.route(['/timereport/gtd/time/<model("project.gtd.timebox"):gtd_timebox>'], type='http', auth="user", website=True)
+    def gtd_timebox(self, gtd_timebox=False, **post):
+        cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
+        stage = request.env.ref("project.project_tt_deployment")
+        ctx = {
+            'timebox' : gtd_timebox,
+            'timeboxes' : request.env['project.gtd.timebox'].search([]),
+            'tasks': request.env['project.task'].search(['&',('timebox_id','=',gtd_timebox and gtd_timebox.id),('user_id','=',uid),("stage_id.id","!=",stage.id)]),
+            'redirect' : '/timereport/gtd/time/%s' % gtd_timebox.id,
             }
     
         return request.render('project_gtd_context.gtd_context', ctx)
