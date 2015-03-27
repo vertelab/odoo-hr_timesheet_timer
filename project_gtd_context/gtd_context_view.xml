@@ -4,7 +4,7 @@
          <!--GTD option in dropdown menu-->
         <template id="layout" inherit_id="mobile_timesheet_menu.layout">
             <xpath expr='//ul[@id="mobile-timesheet-menu"]' position="inside">                 
-                <li><a href="/timereport/gtd/list" role="menuitem">GTD</a></li>
+                <li><a href="/timereport/gtd" role="menuitem">GTD</a></li>
             </xpath>
         </template>
         
@@ -135,7 +135,26 @@
                                                 <section class="oe_container oe_dark">
                                                     <div class="oe_row">           
                                                         <div><br></br>
+                                                        
+                                                            <div class="panel-group" id="accordion">
+                                                                <h4 class="panel-title">
+                                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                                                                        <b class="caret"></b><font size="6"><strong> Todo List</strong></font></a>
+                                                                </h4>
+                                                                <div id="collapseSix" class="panel-collapse collapse">
+                                                                    <table class="table" style="background-color:#EFE8E8">
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="/timereport/gtd/time/1">Today</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        
+<!--
                                                             <h2><strong>Todo List </strong></h2><br/>                                                  
+-->
                                                             <font size="4">  
                                                                 <ul>
                                                                     <t t-set="print_header" t-value="''"/>
@@ -143,7 +162,7 @@
                                                                         <t t-if="t.context_id and t.context_id.name">     
                                                                             <t t-if="t.context_id and t.context_id.name and (print_header != t.context_id.name)">
                                                                                 <t t-set="print_header" t-value="t.context_id.name"/>
-                                                                                  <font size="4"><em><t t-esc="t.context_id.name"/></em></font><br/>
+                                                                                <font size="4"><em><t t-esc="t.context_id.name"/></em></font><br/>
                                                                             </t>
                                                                         </t>                   
                                                                         <li><a t-att-href="'/timereport/%s?redirect=%s' % (t.id,redirect)">
@@ -188,7 +207,9 @@
                 <field name="sequence" position="after">
                     <field string="Latitude" name="latitude"/>
                     <field string="Longitude" name="longitude"/>
+<!--
                     <field string="Calendar" name="calendar_id"/>
+-->
 <!--
                     <field string="Start time" name="start_time"/>
                     <field string="Stop time" name="stop_time"/>

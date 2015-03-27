@@ -102,7 +102,7 @@ class project_gtd_context(models.Model):
 
     latitude = fields.Float(string = "Lat")
     longitude = fields.Float(string = "Long")
-    calendar_id = fields.One2many("resource.calendar", inverse_name="gtd_calendar")
+    #~ calendar_id = fields.Many2one("resource.calendar", inverse_name="gtd_calendar")
     task_ids = fields.Many2one("project.task", inverse_name="gtd_context_id")
     
     def check_position(self, longitude, latitude, distance):
@@ -119,7 +119,7 @@ class project_task(models.Model):
 class calendar(models.Model):
     _inherit="resource.calendar"
     
-    gtd_calendar = fields.Many2one("project.gtd.context", inverse_name="calendar_id")
+    #~ gtd_calendar = fields.One2many("project.gtd.context", inverse_name="calendar_id")
     
     #~ start_time = fields.Datetime('Start Date', select="1")
     #~ stop_time = fields.Datetime('Stop Date', select="1")
