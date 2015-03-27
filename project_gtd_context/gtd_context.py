@@ -36,14 +36,16 @@ class controller(http.Controller):
     @http.route(['/timereport/gtd/list'], type='http', auth="user", website=True)
     def gtd_list(self, **post):
         ctx = {
+            'context' : False,
             'longitude' : post.get("longitude") if post else None,
             'latitude' : post.get("latitude") if post else None,
             'redirect' : '/timereport/gtd',
+            'contexts' : request.env['project.gtd.context'].search([]),
             'update_position' : not post.get("update_position", "True") == "True",
             #~ 'calendar_id' : calendar_id.name if ('resource_calendar_attendace.dayofweek')>= 0 or ('resource_calendar_attendace.dayofweek')<= 4 else None
             }
         stage = request.env.ref("project.project_tt_deployment")
-        ctx['tasks']= request.env['project.task'].search(['&',("user_id","=",request.uid),("stage_id.id","!=",stage.id)], order='sequence').sorted(key=lambda r: r.context_id.name)
+        ctx['tasks']= request.env['project.task'].search(['&',("user_id","=",request.uid),("stage_id.id","!=",stage.id)]).sorted(key=lambda r: r.timebox_id)
         return request.render('project_gtd_context.gtd_context', ctx)
 
     @http.route(['/timereport/gtd'], type='http', auth="user", website=True)
@@ -53,21 +55,17 @@ class controller(http.Controller):
             'latitude' : post.get("latitude") if post else None,
             'redirect' : '/timereport/gtd',
             'update_position' : not post.get("update_position", "True") == "True",
+            'contexts' : request.env['project.gtd.context'].search([]),
         }
         _logger.info('post: %s long: %s lat: %s' % (post, ctx['longitude'], ctx['latitude']))
         if ctx["update_position"]:
             stage = request.env.ref("project.project_tt_deployment")
-            contexts_list = []
             if ctx["longitude"] and ctx["latitude"]:
                 contexts = request.env["project.gtd.context"].search([])
-                _logger.info(contexts)
                 for record in contexts:
                     if record.check_position(float(ctx["longitude"]), float(ctx["latitude"]), 0.01):
-                        contexts_list.append(record.id)
-                _logger.info(contexts_list)
-            ctx['tasks']= request.env['project.task'].search(['&',("context_id","in",contexts_list),('user_id','=',request.uid),("stage_id.id","!=",stage.id)], order='sequence')
-            
-            return request.render('project_gtd_context.gtd_context', ctx)
+                        return werkzeug.utils.redirect("/timereport/gtd/%s" % record.id)
+            return werkzeug.utils.redirect("/timereport/gtd/list")
             
         return request.render('project_gtd_context.get_location', ctx) 
 
@@ -90,6 +88,7 @@ class controller(http.Controller):
         stage = request.env.ref("project.project_tt_deployment")
         ctx = {
             'timebox' : gtd_timebox,
+            'contexts' : request.env['project.gtd.context'].search([]),
             'timeboxes' : request.env['project.gtd.timebox'].search([]),
             'tasks': request.env['project.task'].search(['&',('timebox_id','=',gtd_timebox and gtd_timebox.id),('user_id','=',uid),("stage_id.id","!=",stage.id)]),
             'redirect' : '/timereport/gtd/time/%s' % gtd_timebox.id,

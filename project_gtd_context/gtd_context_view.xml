@@ -51,146 +51,80 @@
             <title>Getting things done</title>
                 <t t-call="website.layout">
                     <div id="wrap" class="oe_structure oe_empty">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-2 col-md-2">
-                                    <div class="panel-group" id="accordion">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Context</a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseOne" class="panel-collapse collapse ">
-                                                <div class="panel-body">
-                                                    <table class="table">
-                                                        <tr>
-                                                            <td>
-                                                                <a href="/timereport/gtd">Tasks Near Me</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="/timereport/gtd/list">All</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="/timereport/gtd/1">Office</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="/timereport/gtd/4">Car</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="/timereport/gtd/2">Travel</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="/timereport/gtd/3">Home</a>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Timebox</a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseTwo" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <table class="table">
-                                                        <tr>
-                                                            <td>
-                                                                <a href="/timereport/gtd/time/1">Today</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="/timereport/gtd/time/2">This Week</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="/timereport/gtd/time/3">Long Term</a>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div><br/>
-                                    </div>
-                                </div> 
-                                <div class="col-sm-10 col-md-10">
-                                    <div class="well">
-                                        <section class="mb32 mt16">
-                                            <div class="container">
-                                                <section class="oe_container oe_dark">
-                                                    <div class="oe_row">           
-                                                        <div><br></br>
-                                                        
-                                                            <div class="panel-group" id="accordion">
-                                                                <h4 class="panel-title">
-                                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
-                                                                        <b class="caret"></b><font size="6"><strong> Todo List</strong></font></a>
-                                                                </h4>
-                                                                <div id="collapseSix" class="panel-collapse collapse">
-                                                                    <table class="table" style="background-color:#EFE8E8">
-                                                                        <tr>
-                                                                            <td>
-                                                                                <a href="/timereport/gtd/time/1">Today</a>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        
-<!--
-                                                            <h2><strong>Todo List </strong></h2><br/>                                                  
--->
-                                                            <font size="4">  
-                                                                <ul>
-                                                                    <t t-set="print_header" t-value="''"/>
-                                                                    <t t-foreach="tasks" t-as="t">   
-                                                                        <t t-if="t.context_id and t.context_id.name">     
-                                                                            <t t-if="t.context_id and t.context_id.name and (print_header != t.context_id.name)">
-                                                                                <t t-set="print_header" t-value="t.context_id.name"/>
-                                                                                <font size="4"><em><t t-esc="t.context_id.name"/></em></font><br/>
+                        <div class="container">                             
+                            <div class="col-sm-10 col-md-10">
+                                <div class="well">
+                                    <section class="mb32 mt16">
+                                        <div class="container">
+                                            <section class="oe_container oe_dark">
+                                                <div class="oe_row">           
+                                                    <div><br></br>
+                                                        <div class="panel-group" id="accordion">
+                                                            <h4 class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                                                                    <b class="caret"></b><font size="6">
+                                                                        <strong>
+                                                                            <t t-if="context">
+                                                                                <t t-esc=" context.name"/>
                                                                             </t>
-                                                                        </t>                   
-                                                                        <li><a t-att-href="'/timereport/%s?redirect=%s' % (t.id,redirect)">
-                                                                           <t t-esc="t.name"/></a>
-<!--
-                                                                           <t t-if="t.context_id.name">
-                                                                               <span style="font-size:0.7em">
-                                                                               (<t t-esc="t.context_id.name"/>)
-                                                                               </span>
-                                                                           </t>
--->
-                                                                        </li> 
-                                                                    </t>
-                                                                </ul>
-                                                            </font>
+                                                                       
+                                                                            <t t-if="not context">
+                                                                                <t t-esc=" 'Todo List'"/>
+                                                                            </t>
+                                                                        </strong></font></a>
+                                                            </h4>
+                                                            <div id="collapseSix" class="panel-collapse collapse">
+                                                                <table class="table" style="background-color:#EFE8E8">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <t t-foreach="contexts" t-as="c">
+                                                                                <t t-if="c.name">
+                                                                                    <a t-att-href="'/timereport/gtd/%s' %c.id"><t t-esc="c.name"/></a><br/> 
+                                                                                </t>
+                                                                            </t>
+                                                                        </td>
+                                                                    </tr>    
+                                                                    <tr>
+                                                                        <td>
+                                                                            <a href="/timereport/gtd/list">View All Tasks</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <a href="/timereport/gtd">View Tasks Near Me</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
                                                         </div>
-                                                    </div> 
-                                                </section>  
-                                            </div>
-                                        </section>
-                                    </div>
+                                                        <font size="4">  
+                                                            <ul>
+                                                                <t t-set="print_header" t-value="''"/>
+                                                                <t t-foreach="tasks" t-as="t">   
+                                                                    <t t-if="t.timebox_id and t.timebox_id.name">     
+                                                                        <t t-if="t.timebox_id and t.timebox_id.name and (print_header != t.timebox_id.name)">
+                                                                            <t t-set="print_header" t-value="t.timebox_id.name"/>
+                                                                            <font size="4"><em><t t-esc="t.timebox_id.name"/></em></font><br/>
+                                                                        </t>
+                                                                    </t>                   
+                                                                    <li><a t-att-href="'/timereport/%s?redirect=%s' % (t.id,redirect)">
+                                                                       <t t-esc="t.name"/></a>
+                                                                    </li> 
+                                                                </t>
+                                                            </ul>
+                                                        </font>
+                                                    </div>
+                                                </div> 
+                                            </section>  
+                                        </div>
+                                    </section>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </t>
         </template>
-    
+
         <template id="gtd_task_form" inherit_id="mobile_timesheet_timereport.project_timereport_form" name="gtd task form">
             <xpath expr="//t[@t-if='task.project_id and task.project_id.name']" position="after">
                 <t t-if="task.context_id.name"> 
@@ -206,32 +140,9 @@
             <field name="arch" type="xml">
                 <field name="sequence" position="after">
                     <field string="Latitude" name="latitude"/>
-                    <field string="Longitude" name="longitude"/>
-<!--
-                    <field string="Calendar" name="calendar_id"/>
--->
-<!--
-                    <field string="Start time" name="start_time"/>
-                    <field string="Stop time" name="stop_time"/>
--->
-                    
+                    <field string="Longitude" name="longitude"/>   
                 </field>
             </field>
         </record>
-        
-<!--
-        <record id="view_gtd_view_task_form2" model="ir.ui.view">
-            <field name="name">project.gtd.task.form</field>
-            <field name="model">project.task</field>
-            <field name="inherit_id" ref="project.view_task_form2"/>
-            <field name="arch" type="xml">
-                <field name="reviewer_id" position="after">
-                    <field string="Start time" name="start_time"/>
-                    <field string="Stop time" name="stop_time"/>
-                    <field string="BOOOOOOO" name="boo"/>
-                </field>
-            </field>
-        </record>
--->
     </data>
 </openerp>
