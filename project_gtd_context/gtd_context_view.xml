@@ -22,7 +22,7 @@
                     window.setTimeout(function () {
                         document.getElementById("position_form").submit();
                         }
-                    ,500);
+                    ,1000);
                 };
                 
 
@@ -106,6 +106,7 @@
                                                                             <t t-set="print_header" t-value="t.timebox_id.name"/>
                                                                             <font size="4"><em><t t-esc="t.timebox_id.name"/></em></font><br/>
                                                                         </t>
+                                                                        
                                                                     </t>                   
                                                                     <li><a t-att-href="'/timereport/%s?redirect=%s' % (t.id,redirect)">
                                                                        <t t-esc="t.name"/></a>
@@ -141,6 +142,7 @@
                 <field name="sequence" position="after">
                     <field string="Latitude" name="latitude"/>
                     <field string="Longitude" name="longitude"/>   
+                    <field string="Calendar" name="calendar_id"/>
                 </field>
             </field>
         </record>

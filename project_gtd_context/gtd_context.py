@@ -24,6 +24,7 @@ from openerp.exceptions import except_orm, Warning, RedirectWarning
 from openerp import http
 from openerp.http import request
 from openerp import SUPERUSER_ID
+from operator import itemgetter, attrgetter
 import openerp.tools
 import string
 import werkzeug
@@ -42,10 +43,10 @@ class controller(http.Controller):
             'redirect' : '/timereport/gtd',
             'contexts' : request.env['project.gtd.context'].search([]),
             'update_position' : not post.get("update_position", "True") == "True",
-            #~ 'calendar_id' : calendar_id.name if ('resource_calendar_attendace.dayofweek')>= 0 or ('resource_calendar_attendace.dayofweek')<= 4 else None
             }
         stage = request.env.ref("project.project_tt_deployment")
-        ctx['tasks']= request.env['project.task'].search(['&',("user_id","=",request.uid),("stage_id.id","!=",stage.id)]).sorted(key=lambda r: r.timebox_id)
+        ctx['tasks']= request.env['project.task'].search(['&',("user_id","=",request.uid),
+            ("stage_id.id","!=",stage.id)], order='sequence').sorted(key=lambda r: r.timebox_id.sequence)
         return request.render('project_gtd_context.gtd_context', ctx)
 
     @http.route(['/timereport/gtd'], type='http', auth="user", website=True)
@@ -76,7 +77,7 @@ class controller(http.Controller):
         ctx = {
             'context' : gtd_context,
             'contexts' : request.env['project.gtd.context'].search([]),
-            'tasks': request.env['project.task'].search(['&',('context_id','=',gtd_context and gtd_context.id),('user_id','=',uid),("stage_id.id","!=",stage.id)]),
+            'tasks': request.env['project.task'].search(['&',('context_id','=',gtd_context and gtd_context.id),('user_id','=',uid),("stage_id.id","!=",stage.id)]).sorted(key=lambda r: r.timebox_id.sequence),
             'redirect' : '/timereport/gtd/%s' % gtd_context.id,
             }
     
@@ -101,7 +102,7 @@ class project_gtd_context(models.Model):
 
     latitude = fields.Float(string = "Lat")
     longitude = fields.Float(string = "Long")
-    #~ calendar_id = fields.Many2one("resource.calendar", inverse_name="gtd_calendar")
+    calendar_id = fields.Many2one("resource.calendar", inverse_name="gtd_calendar")
     task_ids = fields.Many2one("project.task", inverse_name="gtd_context_id")
     
     def check_position(self, longitude, latitude, distance):
@@ -118,14 +119,4 @@ class project_task(models.Model):
 class calendar(models.Model):
     _inherit="resource.calendar"
     
-    #~ gtd_calendar = fields.One2many("project.gtd.context", inverse_name="calendar_id")
-    
-    #~ start_time = fields.Datetime('Start Date', select="1")
-    #~ stop_time = fields.Datetime('Stop Date', select="1")
-    #~ boo = fields.Boolean(compute="loo", default=False)
-    #~ 
-
-    #~ def loo(self):
-        #~ if self.date_start:
-            #~ if int(self.date_start).weekday() >= 0 and int(self.date_start).weekday() <= 4:
-                #~ self.boo = True
+    gtd_calendar = fields.One2many("project.gtd.context", inverse_name="calendar_id")
