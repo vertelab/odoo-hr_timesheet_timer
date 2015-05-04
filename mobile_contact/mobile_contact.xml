@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+       
+            
+        <template id="mobile_contact.layout" inherit_id="website.layout">
+            <xpath expr="//footer" position="replace">
+            </xpath>
+        </template>
+    
+
+<template id="list" name="List Contacts">
+<t t-call="website.layout">                        
+<div class="container">
+  <div class="page-header">
+    <h1>Contacts
+      <small>Your contact registry</small>
+    </h1>
+  </div>
+  <div class="row">
+    <div id="contact" class="col-md-12">
+      <div class="panel-group" id="accordion">
+        <t t-foreach="res_partners" t-as="res_partner">
+        <div class="panel panel-default" >
+          <div class="panel-heading">
+            <h4 class="panel-title" >
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" t-attf-href="#collapse-{{ res_partner.id }}" >
+                  <div class="row">
+                    <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1" t-field="res_partner.image_small" t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}" />
+                    <div class="col-xs-4 col-sm-2 col-md-4 col-lg-4" t-field="res_partner.name" style="display: inline-block; vertical-align: middle; float:none;" />
+                    <div class="col-xs-4 col-sm-2 col-md-4 col-lg-4" t-field="res_partner.company_id.name" />
+                  </div>
+              </a>
+            </h4>
+          </div>
+          <div t-attf-id="collapse-{{ res_partner.id }}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <a t-attf-href="tel:+{{res_partner.mobile}}" >  <t t-esc="res_partner.mobile" /></a>
+                <a t-attf-href="tel:+{{res_partner.phone}}" t-esc="res_partner.phone" />
+                <a t-attf-href="mailto:{{res_partner.email}}" t-field="res_partner.email" />
+                <a t-attf-href="sip:{{res_partner.email}}" >  <t t-esc="res_partner.mobile" /></a>
+            </div>
+            <div class="panel-footer">
+            <ul class="nav nav-pills" role="tablist" id="buttons"></ul>
+            </div>
+          </div>
+        </div> <!-- pane-default -->
+        </t> 
+    </div> <!-- panel-group -->
+    </div> <!-- faq -->
+   </div> <!--  row -->
+</div>  <!-- container -->
+</t>
+</template> 
+        
+    </data>
+</openerp>

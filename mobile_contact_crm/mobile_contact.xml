@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="buttons" inherit_id="mobile_contact.list">
+                      <xpath expr="//ul[@id='buttons']" position="inside">  
+                        <li role="presentation" class="active" t-if="res_partner.opportunity_count>0">
+                            <a t-att-href="'/contact/%s/opportunity' % res_partner.id">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                Opportunities <span class="badge" t-esc="res_partner.opportunity_count" /></a></li>
+                        <li role="presentation" class="active" t-if="len(res_partner.meeting_ids)>0">
+                            <a t-att-href="'/contact/%s/meeting' % res_partner.id">
+                                 <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            Meetings <span class="badge" t-esc="len(res_partner.meeting_ids)" /></a></li>
+                        <li role="presentation" class="active" t-if="res_partner.phonecall_count>0">
+                            <a t-att-href="'/contact/%s/phonecall' % res_partner.id">
+                            <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                            Phonecalls <span class="badge" t-esc="res_partner.phonecall_count" /></a></li>
+                    </xpath>
+        </template>
+
+<template id="opportunity" name="List Contacts">
+<t t-call="website.layout">                        
+<div class="container">
+  <div class="page-header">
+    <h1>Opportunities <a t-attf-href="/contact/#collapse-{{ res_partner.id }}"> back</a></h1>
+  </div>
+  <div class="row">
+    <div id="contact" class="col-md-12">
+      <div class="panel-group" id="accordion">
+        <t t-foreach="res_partner.opportunity_ids" t-as="lead">
+        <div class="panel panel-default" >
+          <div class="panel-heading">
+            <h4 class="panel-title" >
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" t-attf-href="#collapse-{{ lead.id }}" >
+                  <div class="row">
+                    <div class="col-xs-4 col-sm-2 col-md-4 col-lg-4" t-field="lead.name" style="display: inline-block; vertical-align: middle; float:none;" />
+                    <div class="col-xs-4 col-sm-2 col-md-4 col-lg-4" t-field="lead.planned_revenue" />
+                    <div class="col-xs-4 col-sm-2 col-md-4 col-lg-4" t-field="lead.probapility" />
+                  </div>
+              </a>
+            </h4>
+          </div>
+          <div t-attf-id="collapse-{{ lead.id }}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <span t-field="lead.description" />
+                <span t-field="lead.create_date" />
+                <span t-field="lead.date_action" />
+            </div>
+            <div class="panel-footer">
+            </div>
+          </div>
+        </div> <!-- pane-default -->
+        </t> 
+    </div> <!-- panel-group -->
+    </div> <!-- faq -->
+   </div> <!--  row -->
+</div>  <!-- container -->
+</t>
+</template> 
+
+
+
+<template id="phonecall" name="List Contacts">       
+<t t-call="website.layout">
+<div class="container">
+  <div class="page-header">
+    <h1>Calls   <a t-attf-href="/contact/#collapse-{{ res_partner.id }}"> back</a></h1>
+  </div>
+  <div class="row">
+    <div id="contact" class="col-md-12">
+      <div class="panel-group" id="accordion">
+        <t t-foreach="res_partner.phonecall_ids" t-as="phonecall">
+        <div class="panel panel-default" >
+          <div class="panel-heading">
+            <h4 class="panel-title" >
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" t-attf-href="#collapse-{{ phonecall.id }}" >
+                  <div class="row">
+                    <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1" t-field="phonecall.date"  />
+                    <div class="col-xs-4 col-sm-2 col-md-4 col-lg-4" t-field="phonecall.name" style="display: inline-block; vertical-align: middle; float:none;" />
+                    <div class="col-xs-4 col-sm-2 col-md-4 col-lg-4" t-field="phonecall.opportunity_id.name" />
+                  </div>
+              </a>
+            </h4>
+          </div>
+          <div t-attf-id="collapse-{{ phonecall.id }}" class="panel-collapse collapse">
+            <div class="panel-body">
+         
+                <a t-attf-href="tel:+{{phonecall.description}}" >  <t t-esc="phonecall.description" /></a>
+                <span t-field="phonecall.state" />
+                
+            </div>
+            <div class="panel-footer">
+            </div>
+          </div>
+     
+      
+        </div> <!-- pane-default -->
+        </t> 
+                
+        
+    </div> <!-- panel-group -->
+    </div> <!-- faq -->
+    
+   </div> <!--  row -->
+</div>  <!-- container -->
+                    </t>
+</template> 
+        
+
+<template id="meeting" name="List Contacts">
+<t t-call="website.layout"> 
+    <span t-esc="res_partner.meeting_ids" />                      
+<div class="container">
+  <div class="page-header">
+    <h1>Meetings <a t-attf-href="/contact/#collapse-{{ res_partner.id }}"> back</a></h1>
+  </div>
+  <div class="row">
+    <div id="contact" class="col-md-12">
+      <div class="panel-group" id="accordion">
+        <t t-foreach="res_partner.meeting_ids" t-as="cal">
+        <div class="panel panel-default" >
+          <div class="panel-heading">
+            <h4 class="panel-title" >
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" t-attf-href="#collapse-{{ cal.id }}" >
+                  <div class="row">
+                    <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1" t-field="cal.start_date"  />
+                    <div class="col-xs-4 col-sm-2 col-md-4 col-lg-4" t-field="cal.name" style="display: inline-block; vertical-align: middle; float:none;" />
+                  </div>
+              </a>
+            </h4>
+          </div>
+          <div t-attf-id="collapse-{{ cal.id }}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <span t-field="cal.name" />
+                <span t-field="cal.description" />
+                <span t-field="cal.state" />
+            </div>
+            <div class="panel-footer">
+            </div>
+          </div>
+        </div> <!-- pane-default -->
+        </t> 
+    </div> <!-- panel-group -->
+    </div> <!-- faq -->
+   </div> <!--  row -->
+</div>  <!-- container -->
+</t>
+</template> 
+
+
+    </data>
+</openerp>
