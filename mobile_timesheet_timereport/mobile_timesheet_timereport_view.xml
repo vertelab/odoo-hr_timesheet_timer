@@ -2,11 +2,12 @@
 <openerp>
     <data>
         <!--Time report option in dropdown menu-->
-        <template id="layout" inherit_id="mobile_timesheet_menu.layout">
-            <xpath expr='//ul[@id="mobile-timesheet-menu"]' position="inside">                 
-                <li><a href="/timereport" role="menuitem">Time Report</a></li>
-            </xpath>
-        </template>
+        <record id="menu_timereport" model="website.menu">
+            <field name="name">Time Report</field>
+            <field name="url">/timereport</field>
+            <field name="parent_id" ref="mobile_timesheet_menu.menu_report"/>
+            <field name="sequence" type="int">20</field>
+        </record>
 
 <!-- Template for timereport list -->
         <template id="project_timereport" name="Project Timereport">

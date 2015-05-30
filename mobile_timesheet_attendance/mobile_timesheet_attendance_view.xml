@@ -2,11 +2,12 @@
 <openerp>
     <data>
         <!--Sign in option in dropdown menu-->
-        <template id="menu_layout" inherit_id="mobile_timesheet_menu.layout">
-            <xpath expr='//ul[@id="mobile-timesheet-menu"]' position="inside" >                 
-                <li><a href="/signin" role="menuitem">Sign in</a></li>
-            </xpath>
-        </template>
+        <record id="menu_attendance" model="website.menu">
+            <field name="name">Attendance</field>
+            <field name="url">/signin</field>
+            <field name="parent_id" ref="mobile_timesheet_menu.menu_report"/>
+            <field name="sequence" type="int">20</field>
+        </record>
         
         <record id="view_employee_form_id" model="ir.ui.view">
             <field name="name">hr.employee.form</field>
