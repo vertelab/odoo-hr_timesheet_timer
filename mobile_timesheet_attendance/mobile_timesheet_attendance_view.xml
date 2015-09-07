@@ -96,19 +96,13 @@
                                             </p> 
                                             
                                             <form t-att-action="'/signin/%s' %user.id" method="POST">  
-                                            <div class="container">
-                                                <a style="color: #fff; margin-top: 20%; text-decoration: none;" href="/">
-                                                    <strong><input name="signin_button" type="submit" t-att-value="'%s' %signed_in" class="btn-primary text-center mt16 mb16" style="font-family: 'Orbitron', sans-serif; font-size: 2em; margin:auto; box-shadow: 0px 0px 5px #333; border-radius: 100px; width: 200px; height: 200px;"/></strong>
-                                                </a>
-                                            </div>
+                                                <div class="container">
+                                                    <a style="color: #fff; margin-top: 20%; text-decoration: none;" href="/">
+                                                        <strong><input name="signin_button" type="submit" t-att-value="'%s' %signed_in" class="btn-primary text-center mt16 mb16" style="font-family: 'Orbitron', sans-serif; font-size: 2em; margin:auto; box-shadow: 0px 0px 5px #333; border-radius: 100px; width: 200px; height: 200px;"/></strong>
+                                                    </a>
+                                                </div>
                                             </form>
-            
-<!--
-                                            <form t-att-action="'/signin/%s' %user.id" method="POST">                                          
-                                            <input name="signin_button" type="submit" class="btn btn-primary btn-lg pull-center mt8"
-                                             t-att-value="'%s' %signed_in"/>                     
-                                            </form>
--->
+ 
                                             <br/>
                                             <br/>
                                             <br/>
