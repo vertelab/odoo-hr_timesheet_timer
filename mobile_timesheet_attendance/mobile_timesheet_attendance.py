@@ -50,7 +50,7 @@ class website_check_in(http.Controller):
     
         ctx = {
             'user' : user,
-            'signed_in': "Sign out" if user.employee_ids[0].state == 'present' else "Sign in",
+            'signed_in': "Sign Out" if user.employee_ids[0].state == 'present' else "Sign In",
             'last': last,             
             }
     

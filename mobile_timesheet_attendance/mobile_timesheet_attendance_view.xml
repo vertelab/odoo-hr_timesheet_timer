@@ -48,6 +48,13 @@
             &lt;!DOCTYPE html&gt;
             <html style="height: 100%">
                 <head>
+                    <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'/>
+                     <style>
+                        #signin-content{
+                            font-family: 'Orbitron', sans-serif;
+                        }
+                    </style>
+                
                     <!--FOR APPLE-->
                     <meta name="apple-mobile-web-app-capable" content="yes"/>
                     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
@@ -74,24 +81,34 @@
                 <body>
                     <t t-call="website.layout">
                         <div id="wrap" class="oe_structure oe_empty">
-                            <section class="mb32 mt16">
+                            <section class="mb32 mt16"  id="signin-content">
                                 <div class="container">
                                     <section class="oe_container oe_dark">
                                         <div class="oe_row">           
                                         <div align="center">
                                             <br></br>
-                                            <h2 align="center">Click to sign in and out</h2>
+                                            <h2 align="center" style="text-shadow: 0px 0px 5px #333;">Click to sign in/out</h2>
                                            
-                                            <p align="center">
-                                                <p t-att-value="'Last %s' %signed_in"/>
-                                                <p t-if="signed_in=='Sign out'">Last sign in <t t-esc="last"></t></p>
-                                                <p t-if="signed_in=='Sign in'">Last sign out <t t-esc="last"></t></p>
+                                            <p align="center" style="text-shadow: 0px 0px 5px #333;">
+                                                <p class="hidden" t-att-value="'Last %s' %signed_in"/>
+                                                <p t-if="signed_in=='Sign Out'">Last sign in <t t-esc="last"/></p>
+                                                <p t-if="signed_in=='Sign In'">Last sign out <t t-esc="last"/></p>
                                             </p> 
+                                            
+                                            <form t-att-action="'/signin/%s' %user.id" method="POST">  
+                                            <div class="container">
+                                                <a style="color: #fff; margin-top: 20%; text-decoration: none;" href="/">
+                                                    <strong><input name="signin_button" type="submit" t-att-value="'%s' %signed_in" class="btn-primary text-center mt16 mb16" style="font-family: 'Orbitron', sans-serif; font-size: 2em; margin:auto; box-shadow: 0px 0px 5px #333; border-radius: 100px; width: 200px; height: 200px;"/></strong>
+                                                </a>
+                                            </div>
+                                            </form>
             
+<!--
                                             <form t-att-action="'/signin/%s' %user.id" method="POST">                                          
                                             <input name="signin_button" type="submit" class="btn btn-primary btn-lg pull-center mt8"
                                              t-att-value="'%s' %signed_in"/>                     
                                             </form>
+-->
                                             <br/>
                                             <br/>
                                             <br/>
