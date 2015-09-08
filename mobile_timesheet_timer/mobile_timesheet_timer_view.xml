@@ -9,7 +9,7 @@
             <field name="sequence" type="int">20</field>
         </record>
                
-<!-- Template for timereport list -->
+        <!-- Template for timereport list -->
         <template id="project_timereport" name="Project Timereport">
             &lt;!DOCTYPE html&gt;
             <html style="height: 100%">
