@@ -37,11 +37,6 @@
                 ]]>
             </field>
         </record>
-            
-        <template id="layout" inherit_id="website.layout">
-            <xpath expr="//footer" position="replace">
-            </xpath>
-        </template>
     
         <!-- Template rendering the external HTML support page -->
         <template id="check_in" name="Check in">
