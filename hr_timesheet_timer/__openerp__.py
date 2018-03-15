@@ -30,6 +30,7 @@ Adding start and end time to timesheet.
 ===================================================
 """,
     'author': 'Vertel AB',
+    'license': 'AGPL-3',
     'website': 'http://www.vertel.se',
     'depends': ['hr_timesheet_sheet', 'hr_timesheet', 'project_timesheet'],
     'data': ['hr_timesheet_view.xml',

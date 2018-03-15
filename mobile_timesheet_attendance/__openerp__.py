@@ -28,6 +28,7 @@
 ===================================================
 """,
     'author': 'Vertel AB',
+    'license': 'AGPL-3',
     'website': 'http://www.vertel.se',
     'depends': ['base','mail', 'website', 'hr_attendance','mobile_timesheet_menu'],
     'data': ['mobile_timesheet_attendance_view.xml',

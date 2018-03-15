@@ -31,6 +31,7 @@ You can also change the status of the task to done.
 ===================================================
 """,
 'author': 'Vertel AB',
+    'license': 'AGPL-3',
 'website': 'http://www.vertel.se',
 'depends': ['project','hr_timesheet_timer','product','mobile_timesheet_menu'],
 'data': ['mobile_timesheet_timer_view.xml',

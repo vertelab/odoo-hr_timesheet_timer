@@ -27,6 +27,7 @@ Inserts a dropdown menu-button option in your menu-view that contains other modu
 ===================================================
 """,
 'author': 'Vertel AB',
+    'license': 'AGPL-3',
 'website': 'http://www.vertel.se',
 'depends': ['website'],
 'data': ['menu_view.xml',

@@ -28,6 +28,7 @@ Using contact through your mobile phone.
 ========================================
 """,
     'author': 'Vertel AB',
+    'license': 'AGPL-3',
     'website': 'http://www.vertel.se',
     'depends': ['base','website',],
     'data': ['mobile_contact.xml',
